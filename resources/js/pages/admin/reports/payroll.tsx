@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import HrmLayout from '@/layouts/hrm-layout';
 import * as reportsRoutes from '@/routes/admin/reports';
 
 interface PayrollRow {
@@ -60,16 +59,16 @@ const fmt = (n: number) => `LKR ${n.toLocaleString('en-LK', { minimumFractionDig
 export default function PayrollReport({ report, trend, departments, filters }: Props) {
     const [month, setMonth] = useState(filters.month.toString());
     const [year, setYear] = useState(filters.year.toString());
-    const [dept, setDept] = useState(filters.departmentId?.toString() ?? '');
+    const [dept, setDept] = useState(filters.departmentId?.toString() ?? 'all');
 
-    const applyFilter = () => router.get(reportsRoutes.payroll().url, { month, year, department_id: dept || undefined });
+    const applyFilter = () => router.get(reportsRoutes.payroll().url, { month, year, department_id: dept === 'all' ? undefined : dept });
 
     const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i);
 
     const maxGross = Math.max(...trend.map((t) => t.total_gross), 1);
 
     return (
-        <HrmLayout>
+        <>
             <Head title="Payroll Report" />
 
             <div className="space-y-6 p-6">
@@ -102,7 +101,7 @@ export default function PayrollReport({ report, trend, departments, filters }: P
                         <Select value={dept} onValueChange={setDept}>
                             <SelectTrigger className="w-44"><SelectValue placeholder="All Departments" /></SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="">All Departments</SelectItem>
+                                <SelectItem value="all">All Departments</SelectItem>
                                 {departments.map((d) => <SelectItem key={d.id} value={d.id.toString()}>{d.name}</SelectItem>)}
                             </SelectContent>
                         </Select>
@@ -217,6 +216,6 @@ export default function PayrollReport({ report, trend, departments, filters }: P
                     </CardContent>
                 </Card>
             </div>
-        </HrmLayout>
+        </>
     );
 }

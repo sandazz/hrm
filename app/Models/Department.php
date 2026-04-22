@@ -34,6 +34,11 @@ class Department extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function getActiveEmployeesCountAttribute(): int
     {
         return $this->employees()->where('status', 'active')->count();

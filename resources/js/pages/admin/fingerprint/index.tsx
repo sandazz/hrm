@@ -8,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import HrmLayout from '@/layouts/hrm-layout';
 import * as fingerprintRoutes from '@/routes/admin/fingerprint';
 
 interface Device {
@@ -121,7 +120,7 @@ export default function FingerprintIndex({ devices, recentLogs, stats }: Props) 
     };
 
     return (
-        <HrmLayout>
+        <>
             <Head title="Fingerprint Devices" />
 
             <div className="space-y-6 p-6">
@@ -192,7 +191,7 @@ export default function FingerprintIndex({ devices, recentLogs, stats }: Props) 
                                 </div>
                                 {device.last_synced_at && (
                                     <p className="text-muted-foreground text-xs">
-                                        Last synced: {new Date(device.last_synced_at).toLocaleString()}
+                                        Last synced: {new Date(device.last_synced_at).toLocaleDateString()}
                                     </p>
                                 )}
                                 <div className="flex gap-2 pt-2">
@@ -272,7 +271,7 @@ export default function FingerprintIndex({ devices, recentLogs, stats }: Props) 
                                                     <span className="text-muted-foreground">UID {log.biometric_uid}</span>
                                                 )}
                                             </td>
-                                            <td className="py-2">{new Date(log.punch_time).toLocaleString()}</td>
+                                            <td className="py-2">{new Date(log.punch_time).toLocaleDateString()}</td>
                                             <td className="py-2">
                                                 <Badge
                                                     variant={
@@ -361,7 +360,11 @@ export default function FingerprintIndex({ devices, recentLogs, stats }: Props) 
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            editForm.put(fingerprintRoutes.update(editDevice!.id).url, {
+                            if (!editDevice) {
+                                return;
+                            }
+
+                            editForm.put(fingerprintRoutes.update(editDevice.id).url, {
                                 onSuccess: () => setEditDevice(null),
                             });
                         }}
@@ -396,6 +399,6 @@ export default function FingerprintIndex({ devices, recentLogs, stats }: Props) 
                     </form>
                 </DialogContent>
             </Dialog>
-        </HrmLayout>
+        </>
     );
 }

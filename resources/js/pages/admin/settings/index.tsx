@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import HrmLayout from '@/layouts/hrm-layout';
 import * as settingsRoutes from '@/routes/admin/settings';
 import * as shiftRoutes from '@/routes/admin/settings/shifts';
 import * as leaveTypeRoutes from '@/routes/admin/settings/leave-types';
@@ -70,7 +69,7 @@ export default function SettingsIndex({ company, payroll, fingerprint, shifts, l
     ];
 
     return (
-        <HrmLayout>
+        <>
             <Head title="System Settings" />
             <div className="flex gap-6 p-6">
                 {/* Sidebar nav */}
@@ -108,7 +107,7 @@ export default function SettingsIndex({ company, payroll, fingerprint, shifts, l
                 lt={ltDialog.lt}
                 onClose={() => setLtDialog({ open: false })}
             />
-        </HrmLayout>
+        </>
     );
 }
 

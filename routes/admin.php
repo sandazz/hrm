@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     // Payroll
     Route::get('payroll', [PayrollController::class, 'index'])->name('payroll.index');
     Route::get('payroll/{payroll}', [PayrollController::class, 'show'])->name('payroll.show');
+    Route::get('payroll/{payroll}/download', [PayrollController::class, 'download'])->name('payroll.download');
     Route::post('payroll/generate', [PayrollController::class, 'generate'])->name('payroll.generate');
     Route::post('payroll/generate-bulk', [PayrollController::class, 'generateBulk'])->name('payroll.generate-bulk');
     Route::post('payroll/{payroll}/mark-paid', [PayrollController::class, 'markPaid'])->name('payroll.mark-paid');

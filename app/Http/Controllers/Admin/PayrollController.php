@@ -8,8 +8,10 @@ use App\Models\Employee;
 use App\Models\Payroll;
 use App\Models\SalaryComponent;
 use App\Services\PayrollEngineService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -76,6 +78,29 @@ class PayrollController extends Controller
         return Inertia::render('admin/payroll/show', [
             'payroll' => $payroll->load(['employee.user', 'employee.department', 'processor']),
         ]);
+    }
+
+    public function download(Payroll $payroll)
+    {
+        if (! $payroll->payslip_path || ! Storage::exists($payroll->payslip_path)) {
+            if (! class_exists(Pdf::class)) {
+                GeneratePayslipJob::dispatch($payroll);
+                return back()->with('warning', 'Payslip is being prepared. Try again in a few moments.');
+            }
+
+            $payroll->load(['employee.user', 'employee.department', 'processor']);
+
+            $pdf = Pdf::loadView('pdf.payslip', ['payroll' => $payroll]);
+            $path = "payslips/{$payroll->year}/{$payroll->month}/{$payroll->employee->employee_id}.pdf";
+
+            Storage::put($path, $pdf->output());
+            $payroll->update(['payslip_path' => $path]);
+        }
+
+        return Storage::download(
+            $payroll->payslip_path,
+            sprintf('%s-%s-%s-payslip.pdf', $payroll->employee?->employee_id ?? 'employee', $payroll->month, $payroll->year)
+        );
     }
 
     public function storeComponent(Request $request, Employee $employee): RedirectResponse

@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import HrmLayout from '@/layouts/hrm-layout';
 import * as reportsRoutes from '@/routes/admin/reports';
 
 interface AttendanceRow {
@@ -46,16 +45,16 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 export default function AttendanceReport({ report, departments, filters }: Props) {
     const [month, setMonth] = useState(filters.month.toString());
     const [year, setYear] = useState(filters.year.toString());
-    const [dept, setDept] = useState(filters.departmentId?.toString() ?? '');
+    const [dept, setDept] = useState(filters.departmentId?.toString() ?? 'all');
 
     const applyFilter = () => {
-        router.get(reportsRoutes.attendance().url, { month, year, department_id: dept || undefined });
+        router.get(reportsRoutes.attendance().url, { month, year, department_id: dept === 'all' ? undefined : dept });
     };
 
     const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i);
 
     return (
-        <HrmLayout>
+        <>
             <Head title="Attendance Report" />
 
             <div className="space-y-6 p-6">
@@ -98,7 +97,7 @@ export default function AttendanceReport({ report, departments, filters }: Props
                                 <SelectValue placeholder="All Departments" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="">All Departments</SelectItem>
+                                <SelectItem value="all">All Departments</SelectItem>
                                 {departments.map((d) => (
                                     <SelectItem key={d.id} value={d.id.toString()}>{d.name}</SelectItem>
                                 ))}
@@ -181,6 +180,6 @@ export default function AttendanceReport({ report, departments, filters }: Props
                     </CardContent>
                 </Card>
             </div>
-        </HrmLayout>
+        </>
     );
 }

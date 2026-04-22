@@ -5,7 +5,6 @@ import { useRef } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import HrmLayout from '@/layouts/hrm-layout';
 import * as importRoutes from '@/routes/admin/attendance-import';
 
 interface ImportLog {
@@ -49,7 +48,7 @@ export default function AttendanceImportPage({ imports }: Props) {
         })[status];
 
     return (
-        <HrmLayout>
+        <>
             <Head title="Import Attendance" />
 
             <div className="space-y-6 p-6">
@@ -122,7 +121,7 @@ export default function AttendanceImportPage({ imports }: Props) {
                                         <div>
                                             <p className="font-medium">{imp.filename}</p>
                                             <p className="text-muted-foreground text-xs">
-                                                By {imp.importer?.name ?? '—'} · {new Date(imp.created_at).toLocaleString()}
+                                                By {imp.importer?.name ?? '—'} · {new Date(imp.created_at).toLocaleDateString()}
                                             </p>
                                             <div className="mt-1 flex flex-wrap gap-2 text-xs">
                                                 <span className="rounded bg-green-100 px-1.5 py-0.5 text-green-800">{imp.success_count} added</span>
@@ -165,6 +164,6 @@ export default function AttendanceImportPage({ imports }: Props) {
                     </CardContent>
                 </Card>
             </div>
-        </HrmLayout>
+        </>
     );
 }
