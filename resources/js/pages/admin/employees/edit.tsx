@@ -8,24 +8,39 @@ import InputError from '@/components/input-error';
 import * as employeeRoutes from '@/routes/admin/employees';
 import type { Department, Employee } from '@/types';
 
+type EmployeeFormData = {
+    name: string;
+    email: string;
+    department_id: string;
+    job_title: string;
+    phone: string;
+    address: string;
+    date_of_birth: string;
+    gender: '' | 'male' | 'female' | 'other';
+    hire_date: string;
+    employment_type: 'full_time' | 'part_time' | 'contract' | 'intern';
+    base_salary: string;
+    status: 'active' | 'on_leave' | 'terminated' | 'probation';
+};
+
 interface Props {
     employee: Employee;
     departments: Department[];
 }
 
 export default function EditEmployee({ employee, departments }: Props) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, put, processing, errors } = useForm<EmployeeFormData>({
         name: employee.user?.name ?? '',
         email: employee.user?.email ?? '',
         department_id: employee.department_id ? String(employee.department_id) : '',
         job_title: employee.job_title,
         phone: employee.phone ?? '',
         address: employee.address ?? '',
-        date_of_birth: employee.date_of_birth ?? '',
+        date_of_birth: employee.date_of_birth ? employee.date_of_birth.slice(0, 10) : '',
         gender: employee.gender ?? '',
-        hire_date: employee.hire_date,
+        hire_date: employee.hire_date ? employee.hire_date.slice(0, 10) : '',
         employment_type: employee.employment_type,
-        base_salary: employee.base_salary ?? '',
+        base_salary: employee.base_salary !== undefined && employee.base_salary !== null ? String(employee.base_salary) : '',
         status: employee.status,
     });
 
@@ -110,7 +125,10 @@ export default function EditEmployee({ employee, departments }: Props) {
                             </div>
                             <div className="space-y-1">
                                 <Label>Employment Type *</Label>
-                                <Select value={data.employment_type} onValueChange={(value) => setData('employment_type', value)}>
+                                <Select
+                                    value={data.employment_type}
+                                    onValueChange={(value) => setData('employment_type', value as EmployeeFormData['employment_type'])}
+                                >
                                     <SelectTrigger><SelectValue /></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="full_time">Full Time</SelectItem>
@@ -134,7 +152,10 @@ export default function EditEmployee({ employee, departments }: Props) {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="status">Status</Label>
-                                <Select value={data.status} onValueChange={(value) => setData('status', value)}>
+                                <Select
+                                    value={data.status}
+                                    onValueChange={(value) => setData('status', value as EmployeeFormData['status'])}
+                                >
                                     <SelectTrigger><SelectValue /></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="active">Active</SelectItem>
@@ -193,7 +214,10 @@ export default function EditEmployee({ employee, departments }: Props) {
                             </div>
                             <div className="space-y-1">
                                 <Label>Gender</Label>
-                                <Select value={data.gender} onValueChange={(value) => setData('gender', value)}>
+                                <Select
+                                    value={data.gender}
+                                    onValueChange={(value) => setData('gender', value as EmployeeFormData['gender'])}
+                                >
                                     <SelectTrigger><SelectValue placeholder="Select gender" /></SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="male">Male</SelectItem>

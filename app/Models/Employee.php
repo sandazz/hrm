@@ -31,9 +31,9 @@ class Employee extends Model
     protected function casts(): array
     {
         return [
-            'date_of_birth' => 'date',
-            'hire_date'     => 'date',
-            'end_date'      => 'date',
+            'date_of_birth' => 'date:Y-m-d',
+            'hire_date'     => 'date:Y-m-d',
+            'end_date'      => 'date:Y-m-d',
             'base_salary'   => 'decimal:2',
         ];
     }

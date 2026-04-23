@@ -51,6 +51,20 @@ export default function AttendanceReport({ report, departments, filters }: Props
         router.get(reportsRoutes.attendance().url, { month, year, department_id: dept === 'all' ? undefined : dept });
     };
 
+    const exportReport = () => {
+        const params = new URLSearchParams({
+            month,
+            year,
+            format: 'csv',
+        });
+
+        if (dept !== 'all') {
+            params.set('department_id', dept);
+        }
+
+        window.location.href = `${reportsRoutes.attendance().url}?${params.toString()}`;
+    };
+
     const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i);
 
     return (
@@ -63,7 +77,7 @@ export default function AttendanceReport({ report, departments, filters }: Props
                         <h1 className="text-2xl font-bold">Attendance Report</h1>
                         <p className="text-muted-foreground text-sm">Monthly attendance summary for all employees</p>
                     </div>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={exportReport}>
                         <Download className="mr-2 h-4 w-4" />
                         Export Excel
                     </Button>
