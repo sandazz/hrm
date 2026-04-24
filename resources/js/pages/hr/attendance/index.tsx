@@ -26,6 +26,14 @@ const statusColors: Record<string, string> = {
     holiday: 'bg-purple-100 text-purple-800',
 };
 
+const formatDate = (value?: string) => {
+    if (!value) {
+        return '—';
+    }
+
+    return value.split('T')[0];
+};
+
 function AddAttendanceDialog({ employees }: { employees: Employee[] }) {
     const [open, setOpen] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -133,7 +141,7 @@ export default function HrAttendance({ attendance: data, employees, filters }: P
                                                 <p className="font-medium">{att.employee?.user?.name}</p>
                                                 <p className="text-muted-foreground text-xs">{att.employee?.employee_id}</p>
                                             </td>
-                                            <td className="px-4 py-3">{att.date as string}</td>
+                                            <td className="px-4 py-3">{formatDate(att.date as string)}</td>
                                             <td className="px-4 py-3">{att.check_in ?? '—'}</td>
                                             <td className="px-4 py-3">{att.check_out ?? '—'}</td>
                                             <td className="px-4 py-3">{att.work_hours}h</td>
