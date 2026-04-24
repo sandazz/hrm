@@ -19,6 +19,47 @@ const statusColors: Record<string, string> = {
     holiday: 'bg-purple-100 text-purple-800',
 };
 
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const formatAttendanceDate = (attendance: Attendance) => {
+    const datePart = attendance.date.split('T')[0].split(' ')[0];
+    const [year, month, day] = datePart.split('-');
+
+    const validDate = year && month && day && Number(month) >= 1 && Number(month) <= 12;
+    const formattedDate = validDate
+        ? `${MONTH_NAMES[Number(month) - 1]} ${Number(day)}, ${year}`
+        : attendance.date;
+
+    const formatTime = (time?: string) => {
+        if (!time) {
+            return null;
+        }
+
+        const [hour = '0', minute = '00'] = time.split(':');
+        const hourNumber = Number(hour);
+        if (Number.isNaN(hourNumber)) {
+            return time;
+        }
+
+        const period = hourNumber >= 12 ? 'PM' : 'AM';
+        const hour12 = ((hourNumber + 11) % 12) + 1;
+        return `${hour12.toString().padStart(2, '0')}:${minute.padStart(2, '0')} ${period}`;
+    };
+
+    const formattedCheckIn = formatTime(attendance.check_in);
+    const formattedCheckOut = formatTime(attendance.check_out);
+
+    if (formattedCheckIn && formattedCheckOut) {
+        return `${formattedDate} · ${formattedCheckIn} - ${formattedCheckOut}`;
+    }
+
+    if (formattedCheckIn) {
+        return `${formattedDate} · ${formattedCheckIn}`;
+    }
+
+    return formattedDate;
+};
+
 export default function AdminDashboard({ stats, recentAttendance, chart }: Props) {
     const statCards = [
         { label: 'Total Employees', value: stats.total_employees, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
@@ -91,7 +132,7 @@ export default function AdminDashboard({ stats, recentAttendance, chart }: Props
                                     <div key={att.id} className="flex items-center justify-between border-b pb-2 last:border-0">
                                         <div>
                                             <p className="font-medium text-sm">{att.employee?.user?.name ?? '—'}</p>
-                                            <p className="text-muted-foreground text-xs">{att.date}</p>
+                                            <p className="text-muted-foreground text-xs">{formatAttendanceDate(att)}</p>
                                         </div>
                                         <Badge className={`text-xs ${statusColors[att.status] ?? ''}`} variant="outline">
                                             {att.status.replace('_', ' ')}

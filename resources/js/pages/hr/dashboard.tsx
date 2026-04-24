@@ -17,6 +17,43 @@ const statusColors: Record<string, string> = {
     on_leave: 'bg-blue-100 text-blue-800',
 };
 
+const formatRecentAttendanceTime = (attendance: Attendance) => {
+    const date = new Date(attendance.date);
+    if (Number.isNaN(date.getTime())) {
+        return attendance.date;
+    }
+
+    const formattedDate = date.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    });
+
+    const formattedCheckIn = attendance.check_in
+        ? new Date(`${attendance.date}T${attendance.check_in}`).toLocaleTimeString(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+        })
+        : null;
+
+    const formattedCheckOut = attendance.check_out
+        ? new Date(`${attendance.date}T${attendance.check_out}`).toLocaleTimeString(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+        })
+        : null;
+
+    if (formattedCheckIn && formattedCheckOut) {
+        return `${formattedDate} · ${formattedCheckIn} - ${formattedCheckOut}`;
+    }
+
+    if (formattedCheckIn) {
+        return `${formattedDate} · ${formattedCheckIn}`;
+    }
+
+    return formattedDate;
+};
+
 export default function HrDashboard({ stats, recentAttendance, chart }: Props) {
     const cards = [
         { label: 'Total Employees', value: stats.total_employees, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
@@ -79,10 +116,10 @@ export default function HrDashboard({ stats, recentAttendance, chart }: Props) {
                                     <div key={att.id} className="flex items-center justify-between border-b pb-2 last:border-0">
                                         <div>
                                             <p className="font-medium text-sm">{att.employee?.user?.name}</p>
-                                            <p className="text-muted-foreground text-xs">{att.date} {att.check_in && `· In: ${att.check_in}`}</p>
+                                            <p className="text-muted-foreground text-xs">{formatRecentAttendanceTime(att)}</p>
                                         </div>
                                         <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium capitalize ${statusColors[att.status] ?? ''}`}>
-                                            {att.status}
+                                            {att.status.replace('_', ' ')}
                                         </span>
                                     </div>
                                 ))}

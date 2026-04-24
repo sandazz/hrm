@@ -21,6 +21,24 @@ const statusColors: Record<string, string> = {
     cancelled: 'bg-gray-100 text-gray-800',
 };
 
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const formatLeaveDate = (value?: string) => {
+    if (!value) {
+        return '—';
+    }
+
+    const [datePart] = value.split('T');
+    const [year, month, day] = datePart.split('-');
+    const monthIndex = Number(month) - 1;
+
+    if (!year || Number.isNaN(monthIndex) || monthIndex < 0 || monthIndex > 11 || !day) {
+        return value;
+    }
+
+    return `${MONTH_NAMES[monthIndex]} ${Number(day)}, ${year}`;
+};
+
 export default function HrLeave({ leaves: data, filters }: Props) {
     const [rejectDialog, setRejectDialog] = useState<{ open: boolean; id?: number }>({ open: false });
     const [reason, setReason] = useState('');
@@ -71,7 +89,7 @@ export default function HrLeave({ leaves: data, filters }: Props) {
                                         <tr key={leave.id} className="border-b last:border-0 hover:bg-muted/20">
                                             <td className="px-4 py-3 font-medium">{leave.employee?.user?.name}</td>
                                             <td className="px-4 py-3">{leave.leave_type?.name}</td>
-                                            <td className="px-4 py-3 text-xs">{leave.start_date} → {leave.end_date}</td>
+                                            <td className="px-4 py-3 text-xs">{formatLeaveDate(leave.start_date)} → {formatLeaveDate(leave.end_date)}</td>
                                             <td className="px-4 py-3">{leave.total_days}d</td>
                                             <td className="px-4 py-3">
                                                 <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium capitalize ${statusColors[leave.status] ?? ''}`}>
