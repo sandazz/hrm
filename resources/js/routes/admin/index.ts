@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import users from './users'
 import employees from './employees'
 import departments from './departments'
 import leave from './leave'
@@ -90,6 +91,7 @@ dashboard.form = dashboardForm
 
 const admin = {
     dashboard: Object.assign(dashboard, dashboard),
+    users: Object.assign(users, users),
     employees: Object.assign(employees, employees),
     departments: Object.assign(departments, departments),
     leave: Object.assign(leave, leave),

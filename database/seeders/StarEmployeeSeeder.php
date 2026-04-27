@@ -14,6 +14,28 @@ class StarEmployeeSeeder extends Seeder
 {
     public function run(): void
     {
+        // ── Admin Account ────────────────────────────────────────────────────
+        User::firstOrCreate(
+            ['email' => 'admin@starprint.lk'],
+            [
+                'name'               => 'Super Admin',
+                'password'           => Hash::make('password'),
+                'role'               => 'admin',
+                'email_verified_at'  => now(),
+            ]
+        );
+
+        // ── HR Account ───────────────────────────────────────────────────────
+        User::firstOrCreate(
+            ['email' => 'hr@starprint.lk'],
+            [
+                'name'               => 'HR Manager',
+                'password'           => Hash::make('password'),
+                'role'               => 'hr',
+                'email_verified_at'  => now(),
+            ]
+        );
+
         // Ensure a default department exists
         $dept = Department::firstOrCreate(
             ['code' => 'GEN'],
@@ -141,6 +163,13 @@ class StarEmployeeSeeder extends Seeder
         }
 
         $this->command->info('✅ Star employees seeded successfully.');
+        $this->command->table(
+            ['Role', 'Name', 'Email', 'Password'],
+            [
+                ['admin',    'Super Admin', 'admin@starprint.lk', 'password'],
+                ['hr',       'HR Manager',  'hr@starprint.lk',    'password'],
+            ]
+        );
         $this->command->table(
             ['#', 'Name', 'Email', 'Position', 'Salary', 'OT Rate'],
             collect($employees)->map(fn ($e) => [
