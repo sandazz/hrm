@@ -30,7 +30,8 @@ interface Props {
 }
 
 export default function EditEmployee({ employee, departments }: Props) {
-    const { data, setData, put, processing, errors } = useForm<EmployeeFormData>({        name: employee.user?.name ?? '',
+    const { data, setData, put, processing, errors } = useForm<EmployeeFormData>({
+        name: employee.user?.name ?? '',
         email: employee.user?.email ?? '',
         department_id: employee.department_id ? String(employee.department_id) : '',
         job_title: employee.job_title,
