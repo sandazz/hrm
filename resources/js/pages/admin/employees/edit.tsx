@@ -2,9 +2,10 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import InputError from '@/components/input-error';
+import { KeyRound } from 'lucide-react';
 import * as employeeRoutes from '@/routes/admin/employees';
 import type { Department, Employee } from '@/types';
 
@@ -47,6 +48,22 @@ export default function EditEmployee({ employee, departments }: Props) {
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
         put(employeeRoutes.update({ employee: employee.id }).url);
+    };
+
+    const {
+        data: pwData,
+        setData: setPwData,
+        post: postPassword,
+        processing: pwProcessing,
+        errors: pwErrors,
+        reset: resetPwForm,
+    } = useForm({ password: '', password_confirmation: '' });
+
+    const submitPassword = (e: React.FormEvent) => {
+        e.preventDefault();
+        postPassword(employeeRoutes.resetPassword({ employee: employee.id }).url, {
+            onSuccess: () => resetPwForm(),
+        });
     };
 
     return (
@@ -227,6 +244,52 @@ export default function EditEmployee({ employee, departments }: Props) {
                                 </Select>
                                 <InputError message={errors.gender} />
                             </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Password Reset */}
+                    <Card className="lg:col-span-2">
+                        <CardHeader>
+                            <div className="flex items-center gap-2">
+                                <KeyRound className="h-5 w-5 text-muted-foreground" />
+                                <div>
+                                    <CardTitle>Reset Password</CardTitle>
+                                    <CardDescription>Set a new password for this employee's account.</CardDescription>
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <form onSubmit={submitPassword} className="grid gap-4 sm:grid-cols-2">
+                                <div className="space-y-1">
+                                    <Label htmlFor="password">New Password *</Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        value={pwData.password}
+                                        onChange={(e) => setPwData('password', e.target.value)}
+                                        placeholder="Min. 8 characters"
+                                        required
+                                    />
+                                    <InputError message={pwErrors.password} />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label htmlFor="password_confirmation">Confirm Password *</Label>
+                                    <Input
+                                        id="password_confirmation"
+                                        type="password"
+                                        value={pwData.password_confirmation}
+                                        onChange={(e) => setPwData('password_confirmation', e.target.value)}
+                                        placeholder="Re-enter new password"
+                                        required
+                                    />
+                                    <InputError message={pwErrors.password_confirmation} />
+                                </div>
+                                <div className="sm:col-span-2 flex justify-end">
+                                    <Button type="submit" variant="secondary" disabled={pwProcessing}>
+                                        {pwProcessing ? 'Updating…' : 'Update Password'}
+                                    </Button>
+                                </div>
+                            </form>
                         </CardContent>
                     </Card>
 

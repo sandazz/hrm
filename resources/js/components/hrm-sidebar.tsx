@@ -9,6 +9,7 @@ import {
     Fingerprint,
     LayoutDashboard,
     Settings,
+    ShieldCheck,
     Upload,
     Users,
 } from 'lucide-react';
@@ -34,6 +35,7 @@ import * as adminFingerprint from '@/routes/admin/fingerprint';
 import * as adminAttImport from '@/routes/admin/attendance-import';
 import * as adminReports from '@/routes/admin/reports';
 import * as adminSettings from '@/routes/admin/settings';
+import * as adminUsers from '@/routes/admin/users';
 import * as hrRoutes from '@/routes/hr';
 import * as hrAttendance from '@/routes/hr/attendance';
 import * as hrLeave from '@/routes/hr/leave';
@@ -53,6 +55,7 @@ const adminNav: NavItem[] = [
     { title: 'Att. Report', href: adminReports.attendance(), icon: BarChart3 },
     { title: 'Pay. Report', href: adminReports.payroll(), icon: BarChart3 },
     { title: 'Settings', href: adminSettings.index(), icon: Settings },
+    { title: 'Users', href: adminUsers.index(), icon: ShieldCheck },
 ];
 
 const hrNav: NavItem[] = [

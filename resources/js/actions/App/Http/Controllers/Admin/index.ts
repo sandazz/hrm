@@ -1,4 +1,5 @@
 import DashboardController from './DashboardController'
+import AdminUserController from './AdminUserController'
 import EmployeeController from './EmployeeController'
 import DepartmentController from './DepartmentController'
 import LeaveController from './LeaveController'
@@ -10,6 +11,7 @@ import SettingController from './SettingController'
 
 const Admin = {
     DashboardController: Object.assign(DashboardController, DashboardController),
+    AdminUserController: Object.assign(AdminUserController, AdminUserController),
     EmployeeController: Object.assign(EmployeeController, EmployeeController),
     DepartmentController: Object.assign(DepartmentController, DepartmentController),
     LeaveController: Object.assign(LeaveController, LeaveController),

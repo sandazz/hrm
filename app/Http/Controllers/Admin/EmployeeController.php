@@ -9,6 +9,8 @@ use App\Models\Employee;
 use App\Services\DepartmentService;
 use App\Services\EmployeeService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -74,5 +76,18 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employees.index')
             ->with('success', 'Employee deleted.');
+    }
+
+    public function resetPassword(Request $request, Employee $employee): RedirectResponse
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $employee->user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Password updated successfully.');
     }
 }
