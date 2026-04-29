@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\LeaveType;
+use App\Models\SalaryComponent;
 use App\Models\Shift;
 use App\Services\SettingService;
 use Illuminate\Http\RedirectResponse;
@@ -20,9 +22,15 @@ class SettingController extends Controller
         return Inertia::render('admin/settings/index', [
             'company'     => $this->settingService->getCompanySettings(),
             'payroll'     => $this->settingService->getPayrollSettings(),
+            'payeBrackets'=> $this->settingService->getPayeBrackets(),
             'fingerprint' => $this->settingService->getFingerprintSettings(),
             'shifts'      => $this->settingService->getShifts(),
             'leaveTypes'  => $this->settingService->getLeaveTypes(),
+            'allowances'  => $this->settingService->getAllowanceComponents(),
+            'employees'   => Employee::with('user')->orderBy('id')->get()->map(fn($e) => [
+                'id'   => $e->id,
+                'name' => $e->user?->name ?? 'Employee #'.$e->id,
+            ]),
         ]);
     }
 
@@ -63,7 +71,47 @@ class SettingController extends Controller
         return back()->with('success', 'Payroll settings saved.');
     }
 
-    // ── Fingerprint ───────────────────────────────────────────────────────────
+    // ── PAYE Tax Brackets ─────────────────────────────────────────────────────
+
+    public function updatePayeTax(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'brackets'               => 'required|array|min:1',
+            'brackets.*.from'        => 'required|numeric|min:0',
+            'brackets.*.to'          => 'nullable|numeric',
+            'brackets.*.rate'        => 'required|numeric|min:0|max:100',
+        ]);
+
+        $this->settingService->savePayeBrackets($request->brackets);
+
+        return back()->with('success', 'PAYE tax brackets saved.');
+    }
+
+    // ── Global Allowances ─────────────────────────────────────────────────────
+
+    public function storeAllowance(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'employee_id'    => 'required|exists:employees,id',
+            'component_type' => 'required|in:transport_allowance,meal_allowance,housing_allowance,medical_allowance,other_allowance',
+            'name'           => 'required|string|max:100',
+            'amount'         => 'nullable|numeric|min:0',
+            'is_percentage'  => 'boolean',
+            'percentage'     => 'nullable|numeric|min:0|max:100',
+        ]);
+
+        SalaryComponent::create(array_merge($data, ['is_active' => true]));
+
+        return back()->with('success', 'Allowance added.');
+    }
+
+    public function destroyAllowance(SalaryComponent $component): RedirectResponse
+    {
+        $component->delete();
+        return back()->with('success', 'Allowance removed.');
+    }
+
+    // ── Fingerprint ──────────────────────────────────────────────────────────
 
     public function updateFingerprint(Request $request): RedirectResponse
     {

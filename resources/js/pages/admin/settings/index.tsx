@@ -1,5 +1,5 @@
 import { Head, router, useForm } from '@inertiajs/react';
-import { Building2, ChevronRight, Clock, CreditCard, Fingerprint, Plus, Save, Trash2 } from 'lucide-react';
+import { Building2, ChevronRight, Clock, CreditCard, DollarSign, Fingerprint, Percent, Plus, Save, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
@@ -43,19 +43,34 @@ interface LeaveType {
     is_paid: boolean; is_active: boolean; description?: string;
 }
 
+interface PayeBracket {
+    from: number; to: number | null; rate: number;
+}
+
+interface AllowanceComponent {
+    id: number; employee_id: number; component_type: string; name: string;
+    amount: number; is_percentage: boolean; percentage: number | null; is_active: boolean;
+    employee?: { user?: { name: string } };
+}
+
+interface EmployeeOption { id: number; name: string; }
+
 interface Props {
     company: CompanySettings;
     payroll: PayrollSettings;
     fingerprint: FpSettings;
     shifts: Shift[];
     leaveTypes: LeaveType[];
+    payeBrackets: PayeBracket[];
+    allowances: AllowanceComponent[];
+    employees: EmployeeOption[];
 }
 
-type Tab = 'company' | 'payroll' | 'shifts' | 'leave-types' | 'fingerprint';
+type Tab = 'company' | 'payroll' | 'shifts' | 'leave-types' | 'fingerprint' | 'paye-tax' | 'allowances';
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function SettingsIndex({ company, payroll, fingerprint, shifts, leaveTypes }: Props) {
+export default function SettingsIndex({ company, payroll, fingerprint, shifts, leaveTypes, payeBrackets, allowances, employees }: Props) {
     const [tab, setTab] = useState<Tab>('company');
     const [shiftDialog, setShiftDialog] = useState<{ open: boolean; shift?: Shift }>({ open: false });
     const [ltDialog, setLtDialog] = useState<{ open: boolean; lt?: LeaveType }>({ open: false });
@@ -63,6 +78,8 @@ export default function SettingsIndex({ company, payroll, fingerprint, shifts, l
     const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
         { key: 'company', label: 'Company', icon: <Building2 className="h-4 w-4" /> },
         { key: 'payroll', label: 'Payroll', icon: <CreditCard className="h-4 w-4" /> },
+        { key: 'paye-tax', label: 'PAYE Tax', icon: <Percent className="h-4 w-4" /> },
+        { key: 'allowances', label: 'Allowances', icon: <DollarSign className="h-4 w-4" /> },
         { key: 'shifts', label: 'Shifts', icon: <Clock className="h-4 w-4" /> },
         { key: 'leave-types', label: 'Leave Types', icon: <ChevronRight className="h-4 w-4" /> },
         { key: 'fingerprint', label: 'Fingerprint', icon: <Fingerprint className="h-4 w-4" /> },
@@ -91,6 +108,8 @@ export default function SettingsIndex({ company, payroll, fingerprint, shifts, l
                 <div className="flex-1">
                     {tab === 'company' && <CompanyPanel initial={company} />}
                     {tab === 'payroll' && <PayrollPanel initial={payroll} />}
+                    {tab === 'paye-tax' && <PayeTaxPanel brackets={payeBrackets} />}
+                    {tab === 'allowances' && <AllowancesPanel allowances={allowances} employees={employees} />}
                     {tab === 'shifts' && <ShiftsPanel shifts={shifts} onAdd={() => setShiftDialog({ open: true })} onEdit={(s) => setShiftDialog({ open: true, shift: s })} />}
                     {tab === 'leave-types' && <LeaveTypesPanel leaveTypes={leaveTypes} onAdd={() => setLtDialog({ open: true })} onEdit={(lt) => setLtDialog({ open: true, lt })} />}
                     {tab === 'fingerprint' && <FingerprintPanel initial={fingerprint} />}
@@ -464,6 +483,278 @@ function LeaveTypeDialog({ open, lt, onClose }: { open: boolean; lt?: LeaveType;
                 </form>
             </DialogContent>
         </Dialog>
+    );
+}
+
+// ── PAYE Tax Panel ────────────────────────────────────────────────────────────
+
+function PayeTaxPanel({ brackets: initial }: { brackets: PayeBracket[] }) {
+    const [brackets, setBrackets] = useState<PayeBracket[]>(initial.map(b => ({ ...b })));
+    const [saving, setSaving] = useState(false);
+
+    const updateBracket = (i: number, field: keyof PayeBracket, val: string) => {
+        setBrackets(prev => prev.map((b, idx) => idx === i ? { ...b, [field]: val === '' ? null : parseFloat(val) } : b));
+    };
+
+    const addBracket = () => {
+        const last = brackets[brackets.length - 1];
+        setBrackets(prev => [...prev, { from: last?.to ?? 0, to: null, rate: 0 }]);
+    };
+
+    const removeBracket = (i: number) => setBrackets(prev => prev.filter((_, idx) => idx !== i));
+
+    const save = () => {
+        setSaving(true);
+        router.post(settingsRoutes.paye().url, { brackets } as never, {
+            preserveScroll: true,
+            onFinish: () => setSaving(false),
+        });
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>PAYE Tax Brackets</CardTitle>
+                <CardDescription>
+                    Sri Lanka PAYE income tax brackets applied to monthly taxable income. The last bracket should have no upper limit.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                        <thead>
+                            <tr className="border-b">
+                                <th className="pb-2 pr-4 text-left font-medium">From (LKR / mo)</th>
+                                <th className="pb-2 pr-4 text-left font-medium">To (LKR / mo)</th>
+                                <th className="pb-2 pr-4 text-left font-medium">Rate (%)</th>
+                                <th className="pb-2 text-left font-medium"></th>
+                            </tr>
+                        </thead>
+                        <tbody className="space-y-2">
+                            {brackets.map((b, i) => (
+                                <tr key={i} className="border-b last:border-0">
+                                    <td className="py-2 pr-4">
+                                        <Input
+                                            type="number"
+                                            min={0}
+                                            value={b.from}
+                                            onChange={(e) => updateBracket(i, 'from', e.target.value)}
+                                            className="w-36"
+                                        />
+                                    </td>
+                                    <td className="py-2 pr-4">
+                                        <Input
+                                            type="number"
+                                            min={0}
+                                            value={b.to ?? ''}
+                                            placeholder="No limit"
+                                            onChange={(e) => updateBracket(i, 'to', e.target.value)}
+                                            className="w-36"
+                                        />
+                                    </td>
+                                    <td className="py-2 pr-4">
+                                        <div className="relative w-28">
+                                            <Input
+                                                type="number"
+                                                min={0}
+                                                max={100}
+                                                step={0.5}
+                                                value={b.rate}
+                                                onChange={(e) => updateBracket(i, 'rate', e.target.value)}
+                                            />
+                                            <span className="text-muted-foreground absolute right-3 top-2.5">%</span>
+                                        </div>
+                                    </td>
+                                    <td className="py-2">
+                                        <Button
+                                            type="button"
+                                            size="sm"
+                                            variant="ghost"
+                                            className="text-destructive"
+                                            onClick={() => removeBracket(i)}
+                                            disabled={brackets.length === 1}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="flex items-center gap-3">
+                    <Button type="button" variant="outline" size="sm" onClick={addBracket}>
+                        <Plus className="mr-2 h-4 w-4" /> Add Bracket
+                    </Button>
+                    <Button onClick={save} disabled={saving}>
+                        <Save className="mr-2 h-4 w-4" /> Save PAYE Brackets
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
+    );
+}
+
+// ── Allowances Panel ──────────────────────────────────────────────────────────
+
+const ALLOWANCE_TYPES: { value: string; label: string }[] = [
+    { value: 'transport_allowance', label: 'Transport Allowance' },
+    { value: 'meal_allowance', label: 'Meal Allowance' },
+    { value: 'housing_allowance', label: 'Housing Allowance' },
+    { value: 'medical_allowance', label: 'Medical Allowance' },
+    { value: 'other_allowance', label: 'Other Allowance' },
+];
+
+function formatType(t: string) {
+    return ALLOWANCE_TYPES.find(a => a.value === t)?.label ?? t.replace(/_/g, ' ');
+}
+
+function AllowancesPanel({ allowances, employees }: { allowances: AllowanceComponent[]; employees: EmployeeOption[] }) {
+    const form = useForm({
+        employee_id: '',
+        component_type: 'transport_allowance',
+        name: '',
+        amount: '',
+        is_percentage: false,
+        percentage: '',
+    });
+
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        form.post(settingsRoutes.storeAllowance().url, { preserveScroll: true, onSuccess: () => form.reset() });
+    };
+
+    return (
+        <div className="space-y-6">
+            {/* Existing allowances */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Active Allowances</CardTitle>
+                    <CardDescription>All employee allowances currently used in payroll calculations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    {allowances.length === 0 ? (
+                        <p className="text-muted-foreground py-6 text-center text-sm">No allowances configured yet</p>
+                    ) : (
+                        <div className="space-y-2">
+                            {allowances.map((a) => (
+                                <div key={a.id} className="flex items-center justify-between rounded-lg border p-3">
+                                    <div className="flex items-center gap-4">
+                                        <div>
+                                            <p className="font-medium">{a.name}</p>
+                                            <p className="text-muted-foreground text-xs">{a.employee?.user?.name ?? 'Employee #' + a.employee_id}</p>
+                                        </div>
+                                        <Badge variant="outline">{formatType(a.component_type)}</Badge>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <p className="text-sm font-semibold">
+                                            {a.is_percentage
+                                                ? `${a.percentage}% of basic`
+                                                : `LKR ${Number(a.amount).toLocaleString()}`}
+                                        </p>
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            className="text-destructive"
+                                            onClick={() => router.delete(settingsRoutes.destroyAllowance(a.id).url, {
+                                                preserveScroll: true,
+                                                onBefore: () => confirm(`Remove "${a.name}"?`),
+                                            })}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+
+            {/* Add allowance form */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Add Allowance</CardTitle>
+                    <CardDescription>Assign a new allowance to an employee. It will be included in their next payroll calculation.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={submit} className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                                <Label>Employee</Label>
+                                <Select value={form.data.employee_id} onValueChange={(v) => form.setData('employee_id', v)}>
+                                    <SelectTrigger><SelectValue placeholder="Select employee" /></SelectTrigger>
+                                    <SelectContent>
+                                        {employees.map((e) => (
+                                            <SelectItem key={e.id} value={String(e.id)}>{e.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {form.errors.employee_id && <p className="text-destructive text-xs">{form.errors.employee_id}</p>}
+                            </div>
+                            <div className="space-y-1">
+                                <Label>Allowance Type</Label>
+                                <Select value={form.data.component_type} onValueChange={(v) => form.setData('component_type', v)}>
+                                    <SelectTrigger><SelectValue /></SelectTrigger>
+                                    <SelectContent>
+                                        {ALLOWANCE_TYPES.map((t) => (
+                                            <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-1">
+                                <Label>Display Name</Label>
+                                <Input value={form.data.name} onChange={(e) => form.setData('name', e.target.value)} placeholder="e.g. Transport Allowance" required />
+                                {form.errors.name && <p className="text-destructive text-xs">{form.errors.name}</p>}
+                            </div>
+                            <div className="space-y-1">
+                                <Label>Value Type</Label>
+                                <div className="flex items-center gap-3 pt-2">
+                                    <Switch
+                                        checked={form.data.is_percentage}
+                                        onCheckedChange={(c) => form.setData('is_percentage', c)}
+                                    />
+                                    <span className="text-sm">{form.data.is_percentage ? 'Percentage of basic salary' : 'Fixed amount (LKR)'}</span>
+                                </div>
+                            </div>
+                            {form.data.is_percentage ? (
+                                <div className="space-y-1">
+                                    <Label>Percentage (%)</Label>
+                                    <div className="relative">
+                                        <Input
+                                            type="number"
+                                            min={0}
+                                            max={100}
+                                            step={0.5}
+                                            value={form.data.percentage}
+                                            onChange={(e) => form.setData('percentage', e.target.value)}
+                                            required
+                                        />
+                                        <span className="text-muted-foreground absolute right-3 top-2.5 text-sm">%</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="space-y-1">
+                                    <Label>Amount (LKR)</Label>
+                                    <Input
+                                        type="number"
+                                        min={0}
+                                        step={0.01}
+                                        value={form.data.amount}
+                                        onChange={(e) => form.setData('amount', e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <Button type="submit" disabled={form.processing}>
+                            <Plus className="mr-2 h-4 w-4" /> Add Allowance
+                        </Button>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
 
