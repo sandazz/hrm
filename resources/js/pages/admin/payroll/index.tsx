@@ -28,7 +28,7 @@ const fmt = (n: number | string | undefined) => `LKR ${Number(n ?? 0).toLocaleSt
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 
-function GenerateForm() {
+function GenerateForm({ onSuccess }: { onSuccess?: () => void }) {
     const { data, setData, post, processing, errors } = useForm({
         month: String(currentMonth),
         year: String(currentYear),
@@ -57,7 +57,7 @@ function GenerateForm() {
                 <Button
                     className="w-full"
                     disabled={processing}
-                    onClick={() => post(payrollRoutes.generateBulk().url)}
+                    onClick={() => post(payrollRoutes.generateBulk().url, { onSuccess })}
                 >
                     {processing ? 'Generating…' : 'Generate All'}
                 </Button>
@@ -89,7 +89,7 @@ export default function AdminPayroll({ payrolls: data }: Props) {
                             <p className="text-muted-foreground text-sm mb-3">
                                 Generates payroll for all active employees with EPF/ETF/PAYE calculations.
                             </p>
-                            <GenerateForm />
+                            <GenerateForm onSuccess={() => setBulkOpen(false)} />
                         </DialogContent>
                     </Dialog>
                 </div>
