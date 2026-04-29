@@ -20,11 +20,12 @@ export default function CreateEmployee({ departments }: Props) {
         department_id: '',
         job_title: '',
         phone: '',
+        address: '',
         hire_date: '',
         employment_type: 'full_time',
         base_salary: '',
         gender: '',
-        date_of_birth: '',
+        date_of_birth: ''
     });
 
     const submit = (e: React.FormEvent) => {
@@ -58,7 +59,15 @@ export default function CreateEmployee({ departments }: Props) {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="email">Email *</Label>
-                                <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} required />
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                                    title="Enter a valid email address (e.g. user@example.com)"
+                                    required
+                                />
                                 <InputError message={errors.email} />
                             </div>
                             <div className="space-y-1">
@@ -121,7 +130,21 @@ export default function CreateEmployee({ departments }: Props) {
                         <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                             <div className="space-y-1">
                                 <Label htmlFor="phone">Phone</Label>
-                                <Input id="phone" value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
+                                <Input
+                                    id="phone"
+                                    type="tel"
+                                    value={data.phone}
+                                    onChange={(e) => setData('phone', e.target.value)}
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
+                                    title="Enter a valid 10-digit phone number"
+                                />
+                                <InputError message={errors.phone} />
+                            </div>
+                            <div className="space-y-1">
+                                <Label htmlFor="address">Address</Label>
+                                <Input id="address" value={data.address} onChange={(e) => setData('address', e.target.value)} />
+                                <InputError message={errors.address} />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="date_of_birth">Date of Birth</Label>
