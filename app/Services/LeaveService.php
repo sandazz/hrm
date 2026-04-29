@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LeaveService
@@ -22,8 +24,8 @@ class LeaveService
 
     public function submitRequest(int $employeeId, array $data): LeaveRequest
     {
-        $startDate = \Illuminate\Support\Carbon::parse($data['start_date']);
-        $endDate   = \Illuminate\Support\Carbon::parse($data['end_date']);
+        $startDate = Carbon::parse($data['start_date']);
+        $endDate   = Carbon::parse($data['end_date']);
         $totalDays = $startDate->diffInWeekdays($endDate) + 1;
 
         return LeaveRequest::create([
@@ -45,11 +47,18 @@ class LeaveService
             'approved_at' => now(),
         ]);
 
+        $this->createAttendanceForLeave($leave);
+
         return $leave;
     }
 
     public function reject(LeaveRequest $leave, int $approverId, string $reason): LeaveRequest
     {
+        // If previously approved, remove the auto-created attendance records
+        if ($leave->status === 'approved') {
+            $this->deleteAttendanceForLeave($leave);
+        }
+
         $leave->update([
             'status'           => 'rejected',
             'approved_by'      => $approverId,
@@ -62,6 +71,11 @@ class LeaveService
 
     public function cancel(LeaveRequest $leave): LeaveRequest
     {
+        // If previously approved, remove the auto-created attendance records
+        if ($leave->status === 'approved') {
+            $this->deleteAttendanceForLeave($leave);
+        }
+
         $leave->update(['status' => 'cancelled']);
         return $leave;
     }
@@ -76,5 +90,49 @@ class LeaveService
             ->sum('total_days');
 
         return max(0, $leaveType->days_allowed - $used);
+    }
+
+    // ── Private helpers ───────────────────────────────────────────────────────
+
+    /**
+     * Create an attendance record (status = on_leave) for every weekday
+     * within the leave date range. Skips days that already have a record.
+     */
+    private function createAttendanceForLeave(LeaveRequest $leave): void
+    {
+        $current = $leave->start_date->copy();
+        $end     = $leave->end_date->copy();
+
+        while ($current->lte($end)) {
+            if (! $current->isWeekend()) {
+                Attendance::firstOrCreate(
+                    [
+                        'employee_id' => $leave->employee_id,
+                        'date'        => $current->toDateString(),
+                    ],
+                    [
+                        'status' => 'on_leave',
+                        'source' => 'leave',
+                        'notes'  => "Auto: leave request #{$leave->id}",
+                    ]
+                );
+            }
+            $current->addDay();
+        }
+    }
+
+    /**
+     * Remove attendance records that were auto-created for this leave
+     * (only those with source = 'leave' to avoid touching manual records).
+     */
+    private function deleteAttendanceForLeave(LeaveRequest $leave): void
+    {
+        Attendance::where('employee_id', $leave->employee_id)
+            ->where('source', 'leave')
+            ->whereBetween('date', [
+                $leave->start_date->toDateString(),
+                $leave->end_date->toDateString(),
+            ])
+            ->delete();
     }
 }

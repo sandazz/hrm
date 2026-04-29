@@ -89,7 +89,7 @@ class EmployeeService
     public function generateEmployeeId(): string
     {
         $last = Employee::orderByDesc('id')->value('employee_id');
-        $num  = $last ? (int) ltrim(str_replace('EMP-', '', $last), '0') + 1 : 1;
-        return 'EMP-' . str_pad($num, 4, '0', STR_PAD_LEFT);
+        $num  = $last ? (int) ltrim(str_replace('STAR-', '', $last), '0') + 1 : 1;
+        return 'STAR-' . str_pad($num, 4, '0', STR_PAD_LEFT);
     }
 }
