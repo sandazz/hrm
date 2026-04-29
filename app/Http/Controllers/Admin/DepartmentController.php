@@ -20,6 +20,7 @@ class DepartmentController extends Controller
         return Inertia::render('admin/departments/index', [
             'departments' => $this->departmentService->paginate(request()->only('search')),
             'filters'     => request()->only('search'),
+            'managers'    => User::whereIn('role', ['admin', 'hr'])->get(['id', 'name']),
         ]);
     }
 
@@ -37,6 +38,7 @@ class DepartmentController extends Controller
             'code'        => 'required|string|max:10|unique:departments,code',
             'description' => 'nullable|string',
             'manager_id'  => 'nullable|exists:users,id',
+            'is_active'   => 'boolean',
         ]);
 
         $this->departmentService->create($data);

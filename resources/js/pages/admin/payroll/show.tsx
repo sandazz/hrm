@@ -180,7 +180,7 @@ export default function PayrollShow({ payroll }: { payroll: Payroll }) {
                                         <Separator />
                                         <div className="flex justify-between font-semibold">
                                             <span>Total Deductions</span>
-                                            <span className="text-red-600">({deductionRows.reduce((s, r) => s + r.amount, 0).toLocaleString()})</span>
+                                            <span className="text-red-600">({deductionRows.reduce((s, r) => s + Number(r.amount), 0).toLocaleString()})</span>
                                         </div>
                                     </div>
                                 </div>

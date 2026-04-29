@@ -104,6 +104,8 @@ export default function EditEmployee({ employee, departments }: Props) {
                                     type="email"
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
+                                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                                    title="Enter a valid email address (e.g. user@example.com)"
                                     required
                                 />
                                 <InputError message={errors.email} />
@@ -205,8 +207,12 @@ export default function EditEmployee({ employee, departments }: Props) {
                                 <Label htmlFor="phone">Phone</Label>
                                 <Input
                                     id="phone"
+                                    type="tel"
                                     value={data.phone}
                                     onChange={(e) => setData('phone', e.target.value)}
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
+                                    title="Enter a valid 10-digit phone number"
                                 />
                                 <InputError message={errors.phone} />
                             </div>
