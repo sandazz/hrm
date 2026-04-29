@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:83
+* @see app/Http/Controllers/Admin/SettingController.php:131
 * @route '/admin/settings/shifts'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:83
+* @see app/Http/Controllers/Admin/SettingController.php:131
 * @route '/admin/settings/shifts'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:83
+* @see app/Http/Controllers/Admin/SettingController.php:131
 * @route '/admin/settings/shifts'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:83
+* @see app/Http/Controllers/Admin/SettingController.php:131
 * @route '/admin/settings/shifts'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:83
+* @see app/Http/Controllers/Admin/SettingController.php:131
 * @route '/admin/settings/shifts'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:100
+* @see app/Http/Controllers/Admin/SettingController.php:148
 * @route '/admin/settings/shifts/{shift}'
 */
 export const update = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -72,7 +72,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:100
+* @see app/Http/Controllers/Admin/SettingController.php:148
 * @route '/admin/settings/shifts/{shift}'
 */
 update.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ update.url = (args: { shift: number | { id: number } } | [shift: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:100
+* @see app/Http/Controllers/Admin/SettingController.php:148
 * @route '/admin/settings/shifts/{shift}'
 */
 update.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -115,7 +115,7 @@ update.put = (args: { shift: number | { id: number } } | [shift: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:100
+* @see app/Http/Controllers/Admin/SettingController.php:148
 * @route '/admin/settings/shifts/{shift}'
 */
 const updateForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,7 +130,7 @@ const updateForm = (args: { shift: number | { id: number } } | [shift: number | 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:100
+* @see app/Http/Controllers/Admin/SettingController.php:148
 * @route '/admin/settings/shifts/{shift}'
 */
 updateForm.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -147,7 +147,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:118
+* @see app/Http/Controllers/Admin/SettingController.php:166
 * @route '/admin/settings/shifts/{shift}'
 */
 export const destroy = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -162,7 +162,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:118
+* @see app/Http/Controllers/Admin/SettingController.php:166
 * @route '/admin/settings/shifts/{shift}'
 */
 destroy.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ destroy.url = (args: { shift: number | { id: number } } | [shift: number | { id:
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:118
+* @see app/Http/Controllers/Admin/SettingController.php:166
 * @route '/admin/settings/shifts/{shift}'
 */
 destroy.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -205,7 +205,7 @@ destroy.delete = (args: { shift: number | { id: number } } | [shift: number | { 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:118
+* @see app/Http/Controllers/Admin/SettingController.php:166
 * @route '/admin/settings/shifts/{shift}'
 */
 const destroyForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -220,7 +220,7 @@ const destroyForm = (args: { shift: number | { id: number } } | [shift: number |
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:118
+* @see app/Http/Controllers/Admin/SettingController.php:166
 * @route '/admin/settings/shifts/{shift}'
 */
 destroyForm.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
