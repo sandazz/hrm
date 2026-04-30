@@ -23,8 +23,10 @@ class UpdateEmployeeRequest extends FormRequest
             'gender'          => 'nullable|in:male,female,other',
             'hire_date'       => 'required|date',
             'employment_type' => 'required|in:full_time,part_time,contract,intern',
-            'base_salary'     => 'nullable|numeric|min:0',
-            'status'          => 'nullable|in:active,on_leave,terminated,probation',
+            'base_salary'          => 'nullable|numeric|min:0',
+            'status'               => 'nullable|in:active,on_leave,terminated,probation',
+            'allowance_type_ids'   => 'nullable|array',
+            'allowance_type_ids.*' => 'exists:allowance_types,id',
         ];
     }
 }

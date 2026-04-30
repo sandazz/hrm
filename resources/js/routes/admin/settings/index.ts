@@ -4,7 +4,7 @@ import shifts from './shifts'
 import leaveTypes from './leave-types'
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -19,7 +19,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -28,7 +28,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -38,7 +38,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -48,7 +48,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -58,7 +58,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -68,7 +68,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -85,7 +85,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::company
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 export const company = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -100,7 +100,7 @@ company.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::company
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 company.url = (options?: RouteQueryOptions) => {
@@ -109,7 +109,7 @@ company.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::company
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 company.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -119,7 +119,7 @@ company.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::company
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 const companyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -129,7 +129,7 @@ const companyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::company
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 companyForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -141,7 +141,7 @@ company.form = companyForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::payroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 export const payroll = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -156,7 +156,7 @@ payroll.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::payroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 payroll.url = (options?: RouteQueryOptions) => {
@@ -165,7 +165,7 @@ payroll.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::payroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 payroll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -175,7 +175,7 @@ payroll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::payroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 const payrollForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -185,7 +185,7 @@ const payrollForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::payroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 payrollForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -197,7 +197,7 @@ payroll.form = payrollForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::paye
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 export const paye = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -212,7 +212,7 @@ paye.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::paye
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 paye.url = (options?: RouteQueryOptions) => {
@@ -221,7 +221,7 @@ paye.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::paye
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 paye.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -231,7 +231,7 @@ paye.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::paye
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 const payeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -241,7 +241,7 @@ const payeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::paye
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 payeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -253,7 +253,7 @@ paye.form = payeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::fingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 export const fingerprint = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -268,7 +268,7 @@ fingerprint.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::fingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 fingerprint.url = (options?: RouteQueryOptions) => {
@@ -277,7 +277,7 @@ fingerprint.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::fingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 fingerprint.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -287,7 +287,7 @@ fingerprint.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::fingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 const fingerprintForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -297,7 +297,7 @@ const fingerprintForm = (options?: RouteQueryOptions): RouteFormDefinition<'post
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::fingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 fingerprintForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

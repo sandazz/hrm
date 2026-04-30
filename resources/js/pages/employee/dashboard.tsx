@@ -19,7 +19,7 @@ export default function EmployeeDashboard({ stats, employee, todayAttendance }: 
         { label: 'Present Days (Month)', value: stats.present_days_month, icon: CalendarClock, color: 'text-emerald-600', bg: 'bg-emerald-50' },
         { label: 'Leave Days (Month)', value: stats.leave_days_month, icon: CalendarClock, color: 'text-blue-600', bg: 'bg-blue-50' },
         { label: 'Pending Leaves', value: stats.pending_leaves, icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-50' },
-        { label: 'Net Salary', value: `$${Number(stats.net_salary).toLocaleString()}`, icon: CreditCard, color: 'text-purple-600', bg: 'bg-purple-50' },
+        { label: 'Net Salary', value: `LKR ${Number(stats.net_salary).toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, icon: CreditCard, color: 'text-purple-600', bg: 'bg-purple-50' },
     ];
 
     return (

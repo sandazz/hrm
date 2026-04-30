@@ -76,7 +76,7 @@ class PayrollController extends Controller
     public function show(Payroll $payroll): Response
     {
         return Inertia::render('admin/payroll/show', [
-            'payroll' => $payroll->load(['employee.user', 'employee.department', 'processor']),
+            'payroll' => $payroll->load(['employee.user', 'employee.department', 'employee.allowanceTypes', 'processor']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class PayrollController extends Controller
                 return back()->with('warning', 'Payslip is being prepared. Try again in a few moments.');
             }
 
-            $payroll->load(['employee.user', 'employee.department', 'processor']);
+            $payroll->load(['employee.user', 'employee.department', 'employee.allowanceTypes', 'processor']);
 
             $pdf = Pdf::loadView('pdf.payslip', ['payroll' => $payroll]);
             $path = "payslips/{$payroll->year}/{$payroll->month}/{$payroll->employee->employee_id}.pdf";

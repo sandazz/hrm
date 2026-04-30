@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AllowanceType;
 use App\Models\Employee;
 use App\Models\LeaveType;
 use App\Models\SalaryComponent;
@@ -98,9 +99,7 @@ class SettingService
 
     public function getAllowanceComponents(): \Illuminate\Support\Collection
     {
-        return SalaryComponent::with('employee.user')
-            ->where('component_type', 'like', '%allowance%')
-            ->orderBy('component_type')
+        return AllowanceType::orderBy('component_type')
             ->orderBy('name')
             ->get();
     }

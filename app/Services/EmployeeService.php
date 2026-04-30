@@ -35,7 +35,7 @@ class EmployeeService
                 'role'     => 'employee',
             ]);
 
-            return Employee::create([
+            $employee = Employee::create([
                 'user_id'       => $user->id,
                 'department_id' => $data['department_id'] ?? null,
                 'employee_id'   => $data['employee_id'] ?? $this->generateEmployeeId(),
@@ -49,6 +49,12 @@ class EmployeeService
                 'base_salary'   => $data['base_salary'] ?? 0,
                 'status'        => 'active',
             ]);
+
+            if (!empty($data['allowance_type_ids'])) {
+                $employee->allowanceTypes()->sync($data['allowance_type_ids']);
+            }
+
+            return $employee;
         });
     }
 
@@ -72,6 +78,8 @@ class EmployeeService
                 'base_salary'     => $data['base_salary'] ?? $employee->base_salary,
                 'status'          => $data['status'] ?? $employee->status,
             ]);
+
+            $employee->allowanceTypes()->sync($data['allowance_type_ids'] ?? []);
 
             return $employee->fresh(['user', 'department']);
         });

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::index
-* @see app/Http/Controllers/Admin/SettingController.php:20
+* @see app/Http/Controllers/Admin/SettingController.php:21
 * @route '/admin/settings'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateCompany
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 export const updateCompany = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ updateCompany.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateCompany
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 updateCompany.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ updateCompany.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateCompany
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 updateCompany.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ updateCompany.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateCompany
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 const updateCompanyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const updateCompanyForm = (options?: RouteQueryOptions): RouteFormDefinition<'po
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateCompany
-* @see app/Http/Controllers/Admin/SettingController.php:39
+* @see app/Http/Controllers/Admin/SettingController.php:36
 * @route '/admin/settings/company'
 */
 updateCompanyForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ updateCompany.form = updateCompanyForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 export const updatePayroll = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -153,7 +153,7 @@ updatePayroll.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 updatePayroll.url = (options?: RouteQueryOptions) => {
@@ -162,7 +162,7 @@ updatePayroll.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 updatePayroll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ updatePayroll.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 const updatePayrollForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -182,7 +182,7 @@ const updatePayrollForm = (options?: RouteQueryOptions): RouteFormDefinition<'po
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayroll
-* @see app/Http/Controllers/Admin/SettingController.php:57
+* @see app/Http/Controllers/Admin/SettingController.php:54
 * @route '/admin/settings/payroll'
 */
 updatePayrollForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -194,7 +194,7 @@ updatePayroll.form = updatePayrollForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayeTax
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 export const updatePayeTax = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -209,7 +209,7 @@ updatePayeTax.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayeTax
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 updatePayeTax.url = (options?: RouteQueryOptions) => {
@@ -218,7 +218,7 @@ updatePayeTax.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayeTax
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 updatePayeTax.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -228,7 +228,7 @@ updatePayeTax.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayeTax
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 const updatePayeTaxForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -238,7 +238,7 @@ const updatePayeTaxForm = (options?: RouteQueryOptions): RouteFormDefinition<'po
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updatePayeTax
-* @see app/Http/Controllers/Admin/SettingController.php:76
+* @see app/Http/Controllers/Admin/SettingController.php:73
 * @route '/admin/settings/paye'
 */
 updatePayeTaxForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -250,7 +250,7 @@ updatePayeTax.form = updatePayeTaxForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 export const storeAllowance = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -265,7 +265,7 @@ storeAllowance.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 storeAllowance.url = (options?: RouteQueryOptions) => {
@@ -274,7 +274,7 @@ storeAllowance.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 storeAllowance.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -284,7 +284,7 @@ storeAllowance.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 const storeAllowanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -294,7 +294,7 @@ const storeAllowanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'p
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 storeAllowanceForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -306,7 +306,7 @@ storeAllowance.form = storeAllowanceForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 export const destroyAllowance = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -321,7 +321,7 @@ destroyAllowance.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroyAllowance.url = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -354,7 +354,7 @@ destroyAllowance.url = (args: { component: number | { id: number } } | [componen
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroyAllowance.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -364,7 +364,7 @@ destroyAllowance.delete = (args: { component: number | { id: number } } | [compo
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 const destroyAllowanceForm = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -379,7 +379,7 @@ const destroyAllowanceForm = (args: { component: number | { id: number } } | [co
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyAllowance
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroyAllowanceForm.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -396,7 +396,7 @@ destroyAllowance.form = destroyAllowanceForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateFingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 export const updateFingerprint = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -411,7 +411,7 @@ updateFingerprint.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateFingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 updateFingerprint.url = (options?: RouteQueryOptions) => {
@@ -420,7 +420,7 @@ updateFingerprint.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateFingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 updateFingerprint.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -430,7 +430,7 @@ updateFingerprint.post = (options?: RouteQueryOptions): RouteDefinition<'post'> 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateFingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 const updateFingerprintForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -440,7 +440,7 @@ const updateFingerprintForm = (options?: RouteQueryOptions): RouteFormDefinition
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateFingerprint
-* @see app/Http/Controllers/Admin/SettingController.php:116
+* @see app/Http/Controllers/Admin/SettingController.php:112
 * @route '/admin/settings/fingerprint'
 */
 updateFingerprintForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -452,7 +452,7 @@ updateFingerprint.form = updateFingerprintForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeShift
-* @see app/Http/Controllers/Admin/SettingController.php:131
+* @see app/Http/Controllers/Admin/SettingController.php:127
 * @route '/admin/settings/shifts'
 */
 export const storeShift = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -467,7 +467,7 @@ storeShift.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeShift
-* @see app/Http/Controllers/Admin/SettingController.php:131
+* @see app/Http/Controllers/Admin/SettingController.php:127
 * @route '/admin/settings/shifts'
 */
 storeShift.url = (options?: RouteQueryOptions) => {
@@ -476,7 +476,7 @@ storeShift.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeShift
-* @see app/Http/Controllers/Admin/SettingController.php:131
+* @see app/Http/Controllers/Admin/SettingController.php:127
 * @route '/admin/settings/shifts'
 */
 storeShift.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -486,7 +486,7 @@ storeShift.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeShift
-* @see app/Http/Controllers/Admin/SettingController.php:131
+* @see app/Http/Controllers/Admin/SettingController.php:127
 * @route '/admin/settings/shifts'
 */
 const storeShiftForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -496,7 +496,7 @@ const storeShiftForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeShift
-* @see app/Http/Controllers/Admin/SettingController.php:131
+* @see app/Http/Controllers/Admin/SettingController.php:127
 * @route '/admin/settings/shifts'
 */
 storeShiftForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -508,7 +508,7 @@ storeShift.form = storeShiftForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateShift
-* @see app/Http/Controllers/Admin/SettingController.php:148
+* @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
 export const updateShift = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -523,7 +523,7 @@ updateShift.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateShift
-* @see app/Http/Controllers/Admin/SettingController.php:148
+* @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
 updateShift.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -556,7 +556,7 @@ updateShift.url = (args: { shift: number | { id: number } } | [shift: number | {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateShift
-* @see app/Http/Controllers/Admin/SettingController.php:148
+* @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
 updateShift.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -566,7 +566,7 @@ updateShift.put = (args: { shift: number | { id: number } } | [shift: number | {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateShift
-* @see app/Http/Controllers/Admin/SettingController.php:148
+* @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
 const updateShiftForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -581,7 +581,7 @@ const updateShiftForm = (args: { shift: number | { id: number } } | [shift: numb
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateShift
-* @see app/Http/Controllers/Admin/SettingController.php:148
+* @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
 updateShiftForm.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -598,7 +598,7 @@ updateShift.form = updateShiftForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyShift
-* @see app/Http/Controllers/Admin/SettingController.php:166
+* @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
 export const destroyShift = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -613,7 +613,7 @@ destroyShift.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyShift
-* @see app/Http/Controllers/Admin/SettingController.php:166
+* @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
 destroyShift.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -646,7 +646,7 @@ destroyShift.url = (args: { shift: number | { id: number } } | [shift: number | 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyShift
-* @see app/Http/Controllers/Admin/SettingController.php:166
+* @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
 destroyShift.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -656,7 +656,7 @@ destroyShift.delete = (args: { shift: number | { id: number } } | [shift: number
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyShift
-* @see app/Http/Controllers/Admin/SettingController.php:166
+* @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
 const destroyShiftForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -671,7 +671,7 @@ const destroyShiftForm = (args: { shift: number | { id: number } } | [shift: num
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyShift
-* @see app/Http/Controllers/Admin/SettingController.php:166
+* @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
 destroyShiftForm.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -688,7 +688,7 @@ destroyShift.form = destroyShiftForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:174
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 export const storeLeaveType = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -703,7 +703,7 @@ storeLeaveType.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:174
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 storeLeaveType.url = (options?: RouteQueryOptions) => {
@@ -712,7 +712,7 @@ storeLeaveType.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:174
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 storeLeaveType.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -722,7 +722,7 @@ storeLeaveType.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:174
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 const storeLeaveTypeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -732,7 +732,7 @@ const storeLeaveTypeForm = (options?: RouteQueryOptions): RouteFormDefinition<'p
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::storeLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:174
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 storeLeaveTypeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -744,7 +744,7 @@ storeLeaveType.form = storeLeaveTypeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:189
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 export const updateLeaveType = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -759,7 +759,7 @@ updateLeaveType.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:189
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 updateLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -792,7 +792,7 @@ updateLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:189
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 updateLeaveType.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -802,7 +802,7 @@ updateLeaveType.put = (args: { leaveType: number | { id: number } } | [leaveType
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:189
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 const updateLeaveTypeForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -817,7 +817,7 @@ const updateLeaveTypeForm = (args: { leaveType: number | { id: number } } | [lea
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::updateLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:189
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 updateLeaveTypeForm.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -834,7 +834,7 @@ updateLeaveType.form = updateLeaveTypeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:204
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 export const destroyLeaveType = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -849,7 +849,7 @@ destroyLeaveType.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:204
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroyLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -882,7 +882,7 @@ destroyLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveTyp
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:204
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroyLeaveType.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -892,7 +892,7 @@ destroyLeaveType.delete = (args: { leaveType: number | { id: number } } | [leave
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:204
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 const destroyLeaveTypeForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -907,7 +907,7 @@ const destroyLeaveTypeForm = (args: { leaveType: number | { id: number } } | [le
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroyLeaveType
-* @see app/Http/Controllers/Admin/SettingController.php:204
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroyLeaveTypeForm.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

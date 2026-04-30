@@ -58,7 +58,7 @@ export default function HrDashboard({ stats, recentAttendance, chart }: Props) {
     const cards = [
         { label: 'Total Employees', value: stats.total_employees, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
         { label: 'Present Today', value: stats.today_present, icon: CalendarCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-        { label: 'Absent Today', value: stats.today_absent, icon: TrendingDown, color: 'text-red-600', bg: 'bg-red-50' },
+        { label: 'On Leave Today', value: stats.on_leave_today, icon: TrendingDown, color: 'text-red-600', bg: 'bg-red-50' },
         { label: 'Pending Leaves', value: stats.pending_leaves, icon: CalendarClock, color: 'text-orange-600', bg: 'bg-orange-50' },
     ];
 
