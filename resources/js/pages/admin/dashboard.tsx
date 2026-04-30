@@ -165,7 +165,7 @@ export default function AdminDashboard({ stats, recentAttendance, chart }: Props
                         <CardContent className="p-6">
                             <p className="text-muted-foreground text-sm">Monthly Payroll Total</p>
                             <p className="mt-1 text-3xl font-bold">
-                                ${Number(stats.total_payroll_month).toLocaleString()}
+                                LKR {Number(stats.total_payroll_month).toLocaleString()}
                             </p>
                         </CardContent>
                     </Card>

@@ -145,7 +145,9 @@ export default function EmployeeLeave({ leaves: data, leaveTypes, balances }: Pr
                                     {data.data.map((leave) => (
                                         <tr key={leave.id} className="border-b last:border-0 hover:bg-muted/20">
                                             <td className="px-4 py-3">{leave.leave_type?.name}</td>
-                                            <td className="px-4 py-3 text-xs">{leave.start_date} → {leave.end_date}</td>
+                                            <td className="px-4 py-3 text-xs">
+                                                {new Date(leave.start_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} → {new Date(leave.end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                            </td>
                                             <td className="px-4 py-3">{leave.total_days}d</td>
                                             <td className="px-4 py-3">
                                                 <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium capitalize ${statusColors[leave.status] ?? ''}`}>
