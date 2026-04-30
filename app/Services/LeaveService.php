@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
+use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,25 +75,28 @@ class LeaveService
         // 4. Bulk-insert attendance records for every day in the leave range
         $rows    = [];
         $now     = now()->toDateTimeString();
-        $current = $leave->start_date->copy();
+        $leaveName = $leave->leaveType->name;
+        $period  = CarbonPeriod::create(
+            $leave->start_date->toDateString(),
+            $leave->end_date->toDateString()
+        );
 
-        while ($current->lte($leave->end_date)) {
+        foreach ($period as $date) {
             $rows[] = [
-                'employee_id' => $leave->employee_id,
-                'date'        => $current->toDateString(),
-                'status'      => 'on_leave',
-                'check_in'    => null,
-                'check_out'   => null,
-                'work_hours'  => 0,
-                'notes'       => 'Auto-generated: Approved leave (' . $leave->leaveType->name . ')',
-                'source'      => 'manual',
-                'is_late'     => false,
-                'late_minutes'=> 0,
+                'employee_id'    => $leave->employee_id,
+                'date'           => $date->toDateString(),
+                'status'         => 'on_leave',
+                'check_in'       => null,
+                'check_out'      => null,
+                'work_hours'     => 0,
+                'notes'          => 'Auto-generated: Approved leave (' . $leaveName . ')',
+                'source'         => 'manual',
+                'is_late'        => false,
+                'late_minutes'   => 0,
                 'overtime_hours' => 0,
-                'created_at'  => $now,
-                'updated_at'  => $now,
+                'created_at'     => $now,
+                'updated_at'     => $now,
             ];
-            $current->addDay();
         }
 
         Attendance::upsert($rows, ['employee_id', 'date'], [
