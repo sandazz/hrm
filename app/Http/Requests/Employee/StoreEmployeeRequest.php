@@ -25,6 +25,7 @@ class StoreEmployeeRequest extends FormRequest
             'base_salary'      => 'nullable|numeric|min:0',
             'emergency_contact_name'  => 'nullable|string|max:100',
             'emergency_contact_phone' => 'nullable|string|max:20',
+            'fingerprint_uid'          => 'nullable|string|max:50|unique:employees,fingerprint_uid',
             'allowance_type_ids'      => 'nullable|array',
             'allowance_type_ids.*'    => 'exists:allowance_types,id',
         ];

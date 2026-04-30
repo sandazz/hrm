@@ -18,6 +18,7 @@ export interface Employee {
     user_id: number;
     department_id?: number;
     employee_id: string;
+    fingerprint_uid?: string | null;
     job_title: string;
     phone?: string;
     address?: string;

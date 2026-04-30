@@ -32,6 +32,7 @@ type EmployeeFormData = {
     employment_type: 'full_time' | 'part_time' | 'contract' | 'intern';
     base_salary: string;
     status: 'active' | 'on_leave' | 'terminated' | 'probation';
+    fingerprint_uid: string;
     allowance_type_ids: number[];
 };
 
@@ -55,6 +56,7 @@ export default function EditEmployee({ employee, departments, allowanceTypes }: 
         employment_type: employee.employment_type,
         base_salary: employee.base_salary !== undefined && employee.base_salary !== null ? String(employee.base_salary) : '',
         status: employee.status,
+        fingerprint_uid: employee.fingerprint_uid ?? '',
         allowance_type_ids: employee.allowance_types?.map((a) => a.id) ?? [],
     });
 
@@ -269,6 +271,17 @@ export default function EditEmployee({ employee, departments, allowanceTypes }: 
                                     </SelectContent>
                                 </Select>
                                 <InputError message={errors.gender} />
+                            </div>
+                            <div className="space-y-1">
+                                <Label htmlFor="fingerprint_uid">Fingerprint UID</Label>
+                                <Input
+                                    id="fingerprint_uid"
+                                    value={data.fingerprint_uid}
+                                    onChange={(e) => setData('fingerprint_uid', e.target.value)}
+                                    placeholder="ID registered in biometric device"
+                                    maxLength={50}
+                                />
+                                <InputError message={errors.fingerprint_uid} />
                             </div>
                         </CardContent>
                     </Card>

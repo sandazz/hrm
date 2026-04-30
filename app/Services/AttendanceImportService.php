@@ -133,7 +133,8 @@ class AttendanceImportService
         DB::transaction(function () use ($grouped, $defaultShift, &$success, &$errors, &$duplicates, &$errorDetail) {
             foreach ($grouped as $biometricId => $dates) {
                 // Try to resolve employee
-                $employee = Employee::where('employee_id', 'EMP-' . str_pad($biometricId, 4, '0', STR_PAD_LEFT))
+                $employee = Employee::where('fingerprint_uid', $biometricId)
+                    ->orWhere('employee_id', 'EMP-' . str_pad($biometricId, 4, '0', STR_PAD_LEFT))
                     ->orWhere('employee_id', $biometricId)
                     ->first();
 

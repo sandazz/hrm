@@ -37,6 +37,7 @@ export default function CreateEmployee({ departments, allowanceTypes }: Props) {
         base_salary: '',
         gender: '',
         date_of_birth: '',
+        fingerprint_uid: '',
         allowance_type_ids: [] as number[],
     });
 
@@ -179,6 +180,17 @@ export default function CreateEmployee({ departments, allowanceTypes }: Props) {
                                         <SelectItem value="other">Other</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+                            <div className="space-y-1">
+                                <Label htmlFor="fingerprint_uid">Fingerprint UID</Label>
+                                <Input
+                                    id="fingerprint_uid"
+                                    value={data.fingerprint_uid}
+                                    onChange={(e) => setData('fingerprint_uid', e.target.value)}
+                                    placeholder="ID registered in biometric device"
+                                    maxLength={50}
+                                />
+                                <InputError message={errors.fingerprint_uid} />
                             </div>
                         </CardContent>
                     </Card>

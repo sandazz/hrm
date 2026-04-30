@@ -36,10 +36,11 @@ class EmployeeService
             ]);
 
             $employee = Employee::create([
-                'user_id'       => $user->id,
-                'department_id' => $data['department_id'] ?? null,
-                'employee_id'   => $data['employee_id'] ?? $this->generateEmployeeId(),
-                'job_title'     => $data['job_title'],
+                'user_id'         => $user->id,
+                'department_id'   => $data['department_id'] ?? null,
+                'employee_id'     => $data['employee_id'] ?? $this->generateEmployeeId(),
+                'fingerprint_uid' => $data['fingerprint_uid'] ?? null,
+                'job_title'       => $data['job_title'],
                 'phone'         => $data['phone'] ?? null,
                 'address'       => $data['address'] ?? null,
                 'date_of_birth' => $data['date_of_birth'] ?? null,
@@ -68,6 +69,7 @@ class EmployeeService
 
             $employee->update([
                 'department_id'   => $data['department_id'] ?? $employee->department_id,
+                'fingerprint_uid' => array_key_exists('fingerprint_uid', $data) ? ($data['fingerprint_uid'] ?: null) : $employee->fingerprint_uid,
                 'job_title'       => $data['job_title'],
                 'phone'           => $data['phone'] ?? null,
                 'address'         => $data['address'] ?? null,
