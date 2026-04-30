@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AllowanceType;
 use App\Models\Employee;
 use App\Models\LeaveType;
 use App\Models\SalaryComponent;
@@ -27,10 +28,6 @@ class SettingController extends Controller
             'shifts'      => $this->settingService->getShifts(),
             'leaveTypes'  => $this->settingService->getLeaveTypes(),
             'allowances'  => $this->settingService->getAllowanceComponents(),
-            'employees'   => Employee::with('user')->orderBy('id')->get()->map(fn($e) => [
-                'id'   => $e->id,
-                'name' => $e->user?->name ?? 'Employee #'.$e->id,
-            ]),
         ]);
     }
 
@@ -92,7 +89,6 @@ class SettingController extends Controller
     public function storeAllowance(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'employee_id'    => 'required|exists:employees,id',
             'component_type' => 'required|in:transport_allowance,meal_allowance,housing_allowance,medical_allowance,other_allowance',
             'name'           => 'required|string|max:100',
             'amount'         => 'nullable|numeric|min:0',
@@ -100,15 +96,15 @@ class SettingController extends Controller
             'percentage'     => 'nullable|numeric|min:0|max:100',
         ]);
 
-        SalaryComponent::create(array_merge($data, ['is_active' => true]));
+        AllowanceType::create(array_merge($data, ['is_active' => true]));
 
-        return back()->with('success', 'Allowance added.');
+        return back()->with('success', 'Allowance type added.');
     }
 
-    public function destroyAllowance(SalaryComponent $component): RedirectResponse
+    public function destroyAllowance(AllowanceType $component): RedirectResponse
     {
         $component->delete();
-        return back()->with('success', 'Allowance removed.');
+        return back()->with('success', 'Allowance type removed.');
     }
 
     // ── Fingerprint ──────────────────────────────────────────────────────────

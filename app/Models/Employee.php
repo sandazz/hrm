@@ -68,6 +68,11 @@ class Employee extends Model
         return $this->hasMany(SalaryComponent::class);
     }
 
+    public function allowanceTypes()
+    {
+        return $this->belongsToMany(AllowanceType::class, 'employee_allowance_type');
+    }
+
     public function deviceLogs()
     {
         return $this->hasMany(DeviceLog::class);

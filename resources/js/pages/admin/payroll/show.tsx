@@ -8,6 +8,14 @@ import { Separator } from '@/components/ui/separator';
 import HrmLayout from '@/layouts/hrm-layout';
 import * as payrollRoutes from '@/routes/admin/payroll';
 
+interface AllowanceBreakdownItem {
+    name: string;
+    component_type: string;
+    amount: number;
+    is_percentage: boolean;
+    percentage: number | null;
+}
+
 interface Payroll {
     id: number;
     month: number;
@@ -17,6 +25,7 @@ interface Payroll {
     overtime_pay: number;
     bonus: number;
     allowances: number;
+    allowances_breakdown?: AllowanceBreakdownItem[];
     deductions: number;
     no_pay_deduction: number;
     late_deduction: number;
@@ -49,9 +58,19 @@ const fmt = (n: number) => `LKR ${n.toLocaleString('en-LK', { minimumFractionDig
 export default function PayrollShow({ payroll }: { payroll: Payroll }) {
     const emp = payroll.employee;
 
+    const allowanceRows: { label: string; amount: number }[] =
+        payroll.allowances_breakdown && payroll.allowances_breakdown.length > 0
+            ? payroll.allowances_breakdown.map((a) => ({
+                label: a.is_percentage ? `${a.name} (${a.percentage}%)` : a.name,
+                amount: a.amount,
+            }))
+            : payroll.allowances > 0
+                ? [{ label: 'Allowances', amount: payroll.allowances }]
+                : [];
+
     const earningsRows = [
         { label: 'Basic Salary', amount: payroll.base_salary },
-        ...(payroll.allowances > 0 ? [{ label: 'Allowances', amount: payroll.allowances }] : []),
+        ...allowanceRows,
         ...(payroll.overtime_pay > 0 ? [{ label: `Overtime Pay (${payroll.overtime_hours} hrs)`, amount: payroll.overtime_pay }] : []),
         ...(payroll.bonus > 0 ? [{ label: 'Bonus', amount: payroll.bonus }] : []),
     ];
@@ -158,13 +177,13 @@ export default function PayrollShow({ payroll }: { payroll: Payroll }) {
                                         {earningsRows.map((r, i) => (
                                             <div key={i} className="flex justify-between text-sm">
                                                 <span className="text-muted-foreground">{r.label}</span>
-                                                <span>{r.amount.toLocaleString()}</span>
+                                                <span>{fmt(Number(r.amount))}</span>
                                             </div>
                                         ))}
                                         <Separator />
                                         <div className="flex justify-between font-semibold">
                                             <span>Gross Salary</span>
-                                            <span>{payroll.gross_salary.toLocaleString()}</span>
+                                            <span>{fmt(Number(payroll.gross_salary))}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -174,13 +193,13 @@ export default function PayrollShow({ payroll }: { payroll: Payroll }) {
                                         {deductionRows.map((r, i) => (
                                             <div key={i} className="flex justify-between text-sm">
                                                 <span className="text-muted-foreground">{r.label}</span>
-                                                <span className="text-red-600">({r.amount.toLocaleString()})</span>
+                                                <span className="text-red-600">({fmt(Number(r.amount))})</span>
                                             </div>
                                         ))}
                                         <Separator />
                                         <div className="flex justify-between font-semibold">
                                             <span>Total Deductions</span>
-                                            <span className="text-red-600">({deductionRows.reduce((s, r) => s + Number(r.amount), 0).toLocaleString()})</span>
+                                            <span className="text-red-600">({fmt(deductionRows.reduce((s, r) => s + Number(r.amount), 0))})</span>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +208,7 @@ export default function PayrollShow({ payroll }: { payroll: Payroll }) {
                             <div className="rounded-lg bg-primary/10 p-4">
                                 <div className="flex items-center justify-between">
                                     <span className="text-lg font-bold">NET SALARY</span>
-                                    <span className="text-2xl font-bold text-primary">{fmt(payroll.net_salary)}</span>
+                                    <span className="text-2xl font-bold text-primary">{fmt(Number(payroll.net_salary))}</span>
                                 </div>
                             </div>
 
@@ -199,7 +218,7 @@ export default function PayrollShow({ payroll }: { payroll: Payroll }) {
                                     {employerContribs.map((r, i) => (
                                         <div key={i}>
                                             <p className="text-muted-foreground text-xs">{r.label}</p>
-                                            <p className="font-medium">{r.amount.toLocaleString()}</p>
+                                            <p className="font-medium">{fmt(Number(r.amount))}</p>
                                         </div>
                                     ))}
                                 </div>

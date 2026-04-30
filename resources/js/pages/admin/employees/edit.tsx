@@ -4,10 +4,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import InputError from '@/components/input-error';
 import { KeyRound } from 'lucide-react';
 import * as employeeRoutes from '@/routes/admin/employees';
 import type { Department, Employee } from '@/types';
+
+interface AllowanceType {
+    id: number;
+    name: string;
+    component_type: string;
+    amount: number;
+    is_percentage: boolean;
+    percentage: number | null;
+}
 
 type EmployeeFormData = {
     name: string;
@@ -22,14 +32,16 @@ type EmployeeFormData = {
     employment_type: 'full_time' | 'part_time' | 'contract' | 'intern';
     base_salary: string;
     status: 'active' | 'on_leave' | 'terminated' | 'probation';
+    allowance_type_ids: number[];
 };
 
 interface Props {
-    employee: Employee;
+    employee: Employee & { allowance_types?: AllowanceType[] };
     departments: Department[];
+    allowanceTypes: AllowanceType[];
 }
 
-export default function EditEmployee({ employee, departments }: Props) {
+export default function EditEmployee({ employee, departments, allowanceTypes }: Props) {
     const { data, setData, put, processing, errors } = useForm<EmployeeFormData>({
         name: employee.user?.name ?? '',
         email: employee.user?.email ?? '',
@@ -43,7 +55,15 @@ export default function EditEmployee({ employee, departments }: Props) {
         employment_type: employee.employment_type,
         base_salary: employee.base_salary !== undefined && employee.base_salary !== null ? String(employee.base_salary) : '',
         status: employee.status,
+        allowance_type_ids: employee.allowance_types?.map((a) => a.id) ?? [],
     });
+
+    const toggleAllowance = (id: number) => {
+        setData('allowance_type_ids', data.allowance_type_ids.includes(id)
+            ? data.allowance_type_ids.filter((x) => x !== id)
+            : [...data.allowance_type_ids, id]
+        );
+    };
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -252,6 +272,32 @@ export default function EditEmployee({ employee, departments }: Props) {
                             </div>
                         </CardContent>
                     </Card>
+
+                    {/* Allowances */}
+                    {allowanceTypes.length > 0 && (
+                        <Card className="lg:col-span-2">
+                            <CardHeader><CardTitle>Allowances</CardTitle></CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground mb-3 text-sm">Select the allowances this employee will receive in payroll calculations.</p>
+                                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                                    {allowanceTypes.map((at) => (
+                                        <label key={at.id} className="flex cursor-pointer items-center gap-2 rounded-lg border p-3 hover:bg-muted">
+                                            <Checkbox
+                                                checked={data.allowance_type_ids.includes(at.id)}
+                                                onCheckedChange={() => toggleAllowance(at.id)}
+                                            />
+                                            <div>
+                                                <p className="text-sm font-medium">{at.name}</p>
+                                                <p className="text-muted-foreground text-xs">
+                                                    {at.is_percentage ? `${at.percentage}% of basic` : `LKR ${Number(at.amount).toLocaleString()}`}
+                                                </p>
+                                            </div>
+                                        </label>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
 
                     {/* Password Reset */}
                     <Card className="lg:col-span-2">

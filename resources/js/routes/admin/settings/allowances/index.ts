@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:92
+* @see app/Http/Controllers/Admin/SettingController.php:89
 * @route '/admin/settings/allowances'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 export const destroy = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -72,7 +72,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroy.url = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ destroy.url = (args: { component: number | { id: number } } | [component: number
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroy.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -115,7 +115,7 @@ destroy.delete = (args: { component: number | { id: number } } | [component: num
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 const destroyForm = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,7 +130,7 @@ const destroyForm = (args: { component: number | { id: number } } | [component: 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:108
+* @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
 destroyForm.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

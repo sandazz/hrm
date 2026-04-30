@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
+use App\Models\AllowanceType;
 use App\Models\Employee;
 use App\Services\DepartmentService;
 use App\Services\EmployeeService;
@@ -33,7 +34,8 @@ class EmployeeController extends Controller
     public function create(): Response
     {
         return Inertia::render('admin/employees/create', [
-            'departments' => $this->departmentService->getAllActive(),
+            'departments'    => $this->departmentService->getAllActive(),
+            'allowanceTypes' => AllowanceType::where('is_active', true)->orderBy('name')->get(),
         ]);
     }
 
@@ -57,8 +59,9 @@ class EmployeeController extends Controller
     public function edit(Employee $employee): Response
     {
         return Inertia::render('admin/employees/edit', [
-            'employee'    => $employee->load('user'),
-            'departments' => $this->departmentService->getAllActive(),
+            'employee'       => $employee->load(['user', 'allowanceTypes']),
+            'departments'    => $this->departmentService->getAllActive(),
+            'allowanceTypes' => AllowanceType::where('is_active', true)->orderBy('name')->get(),
         ]);
     }
 
