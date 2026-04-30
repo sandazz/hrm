@@ -1,6 +1,6 @@
 import { Head, router, useForm } from '@inertiajs/react';
 import { Building2, ChevronRight, Clock, CreditCard, DollarSign, Fingerprint, Percent, Plus, Save, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -442,6 +442,16 @@ function LeaveTypeDialog({ open, lt, onClose }: { open: boolean; lt?: LeaveType;
         is_paid: lt?.is_paid ?? true,
         description: lt?.description ?? '',
     });
+
+    useEffect(() => {
+        form.setData({
+            name: lt?.name ?? '',
+            code: lt?.code ?? '',
+            days_allowed: lt?.days_allowed ?? 14,
+            is_paid: lt?.is_paid ?? true,
+            description: lt?.description ?? '',
+        });
+    }, [lt, open]);
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();

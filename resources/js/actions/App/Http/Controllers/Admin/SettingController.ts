@@ -309,7 +309,7 @@ storeAllowance.form = storeAllowanceForm
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-export const destroyAllowance = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroyAllowance = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyAllowance.url(args, options),
     method: 'delete',
 })
@@ -324,7 +324,7 @@ destroyAllowance.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroyAllowance.url = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroyAllowance.url = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { component: args }
     }
@@ -357,7 +357,7 @@ destroyAllowance.url = (args: { component: number | { id: number } } | [componen
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroyAllowance.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroyAllowance.delete = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyAllowance.url(args, options),
     method: 'delete',
 })
@@ -367,7 +367,7 @@ destroyAllowance.delete = (args: { component: number | { id: number } } | [compo
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-const destroyAllowanceForm = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyAllowanceForm = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyAllowance.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -382,7 +382,7 @@ const destroyAllowanceForm = (args: { component: number | { id: number } } | [co
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroyAllowanceForm.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyAllowanceForm.delete = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyAllowance.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -511,7 +511,7 @@ storeShift.form = storeShiftForm
 * @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
-export const updateShift = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const updateShift = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateShift.url(args, options),
     method: 'put',
 })
@@ -526,7 +526,7 @@ updateShift.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
-updateShift.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+updateShift.url = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shift: args }
     }
@@ -559,7 +559,7 @@ updateShift.url = (args: { shift: number | { id: number } } | [shift: number | {
 * @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
-updateShift.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+updateShift.put = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateShift.url(args, options),
     method: 'put',
 })
@@ -569,7 +569,7 @@ updateShift.put = (args: { shift: number | { id: number } } | [shift: number | {
 * @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
-const updateShiftForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateShiftForm = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateShift.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -584,7 +584,7 @@ const updateShiftForm = (args: { shift: number | { id: number } } | [shift: numb
 * @see app/Http/Controllers/Admin/SettingController.php:144
 * @route '/admin/settings/shifts/{shift}'
 */
-updateShiftForm.put = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateShiftForm.put = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateShift.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -601,7 +601,7 @@ updateShift.form = updateShiftForm
 * @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
-export const destroyShift = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroyShift = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyShift.url(args, options),
     method: 'delete',
 })
@@ -616,7 +616,7 @@ destroyShift.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
-destroyShift.url = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroyShift.url = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { shift: args }
     }
@@ -649,7 +649,7 @@ destroyShift.url = (args: { shift: number | { id: number } } | [shift: number | 
 * @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
-destroyShift.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroyShift.delete = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyShift.url(args, options),
     method: 'delete',
 })
@@ -659,7 +659,7 @@ destroyShift.delete = (args: { shift: number | { id: number } } | [shift: number
 * @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
-const destroyShiftForm = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyShiftForm = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyShift.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -674,7 +674,7 @@ const destroyShiftForm = (args: { shift: number | { id: number } } | [shift: num
 * @see app/Http/Controllers/Admin/SettingController.php:162
 * @route '/admin/settings/shifts/{shift}'
 */
-destroyShiftForm.delete = (args: { shift: number | { id: number } } | [shift: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyShiftForm.delete = (args: { shift: string | number | { id: string | number } } | [shift: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyShift.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -747,7 +747,7 @@ storeLeaveType.form = storeLeaveTypeForm
 * @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-export const updateLeaveType = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const updateLeaveType = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateLeaveType.url(args, options),
     method: 'put',
 })
@@ -762,7 +762,7 @@ updateLeaveType.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-updateLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+updateLeaveType.url = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { leaveType: args }
     }
@@ -795,7 +795,7 @@ updateLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType
 * @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-updateLeaveType.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+updateLeaveType.put = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateLeaveType.url(args, options),
     method: 'put',
 })
@@ -805,7 +805,7 @@ updateLeaveType.put = (args: { leaveType: number | { id: number } } | [leaveType
 * @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-const updateLeaveTypeForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateLeaveTypeForm = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateLeaveType.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -820,7 +820,7 @@ const updateLeaveTypeForm = (args: { leaveType: number | { id: number } } | [lea
 * @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-updateLeaveTypeForm.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateLeaveTypeForm.put = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateLeaveType.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -837,7 +837,7 @@ updateLeaveType.form = updateLeaveTypeForm
 * @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-export const destroyLeaveType = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroyLeaveType = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyLeaveType.url(args, options),
     method: 'delete',
 })
@@ -852,7 +852,7 @@ destroyLeaveType.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-destroyLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroyLeaveType.url = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { leaveType: args }
     }
@@ -885,7 +885,7 @@ destroyLeaveType.url = (args: { leaveType: number | { id: number } } | [leaveTyp
 * @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-destroyLeaveType.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroyLeaveType.delete = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyLeaveType.url(args, options),
     method: 'delete',
 })
@@ -895,7 +895,7 @@ destroyLeaveType.delete = (args: { leaveType: number | { id: number } } | [leave
 * @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-const destroyLeaveTypeForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyLeaveTypeForm = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyLeaveType.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -910,7 +910,7 @@ const destroyLeaveTypeForm = (args: { leaveType: number | { id: number } } | [le
 * @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
-destroyLeaveTypeForm.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyLeaveTypeForm.delete = (args: { leaveType: string | number | { id: string | number } } | [leaveType: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroyLeaveType.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

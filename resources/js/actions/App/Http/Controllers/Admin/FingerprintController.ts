@@ -141,7 +141,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Admin/FingerprintController.php:58
 * @route '/admin/fingerprint/{device}'
 */
-export const update = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -156,7 +156,7 @@ update.definition = {
 * @see app/Http/Controllers/Admin/FingerprintController.php:58
 * @route '/admin/fingerprint/{device}'
 */
-update.url = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { device: args }
     }
@@ -189,7 +189,7 @@ update.url = (args: { device: number | { id: number } } | [device: number | { id
 * @see app/Http/Controllers/Admin/FingerprintController.php:58
 * @route '/admin/fingerprint/{device}'
 */
-update.put = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -199,7 +199,7 @@ update.put = (args: { device: number | { id: number } } | [device: number | { id
 * @see app/Http/Controllers/Admin/FingerprintController.php:58
 * @route '/admin/fingerprint/{device}'
 */
-const updateForm = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -214,7 +214,7 @@ const updateForm = (args: { device: number | { id: number } } | [device: number 
 * @see app/Http/Controllers/Admin/FingerprintController.php:58
 * @route '/admin/fingerprint/{device}'
 */
-updateForm.put = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -231,7 +231,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Admin/FingerprintController.php:77
 * @route '/admin/fingerprint/{device}'
 */
-export const destroy = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -246,7 +246,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Admin/FingerprintController.php:77
 * @route '/admin/fingerprint/{device}'
 */
-destroy.url = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { device: args }
     }
@@ -279,7 +279,7 @@ destroy.url = (args: { device: number | { id: number } } | [device: number | { i
 * @see app/Http/Controllers/Admin/FingerprintController.php:77
 * @route '/admin/fingerprint/{device}'
 */
-destroy.delete = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -289,7 +289,7 @@ destroy.delete = (args: { device: number | { id: number } } | [device: number | 
 * @see app/Http/Controllers/Admin/FingerprintController.php:77
 * @route '/admin/fingerprint/{device}'
 */
-const destroyForm = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -304,7 +304,7 @@ const destroyForm = (args: { device: number | { id: number } } | [device: number
 * @see app/Http/Controllers/Admin/FingerprintController.php:77
 * @route '/admin/fingerprint/{device}'
 */
-destroyForm.delete = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -321,7 +321,7 @@ destroy.form = destroyForm
 * @see app/Http/Controllers/Admin/FingerprintController.php:86
 * @route '/admin/fingerprint/{device}/sync'
 */
-export const sync = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const sync = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: sync.url(args, options),
     method: 'post',
 })
@@ -336,7 +336,7 @@ sync.definition = {
 * @see app/Http/Controllers/Admin/FingerprintController.php:86
 * @route '/admin/fingerprint/{device}/sync'
 */
-sync.url = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+sync.url = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { device: args }
     }
@@ -369,7 +369,7 @@ sync.url = (args: { device: number | { id: number } } | [device: number | { id: 
 * @see app/Http/Controllers/Admin/FingerprintController.php:86
 * @route '/admin/fingerprint/{device}/sync'
 */
-sync.post = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+sync.post = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: sync.url(args, options),
     method: 'post',
 })
@@ -379,7 +379,7 @@ sync.post = (args: { device: number | { id: number } } | [device: number | { id:
 * @see app/Http/Controllers/Admin/FingerprintController.php:86
 * @route '/admin/fingerprint/{device}/sync'
 */
-const syncForm = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const syncForm = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: sync.url(args, options),
     method: 'post',
 })
@@ -389,7 +389,7 @@ const syncForm = (args: { device: number | { id: number } } | [device: number | 
 * @see app/Http/Controllers/Admin/FingerprintController.php:86
 * @route '/admin/fingerprint/{device}/sync'
 */
-syncForm.post = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+syncForm.post = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: sync.url(args, options),
     method: 'post',
 })
@@ -401,7 +401,7 @@ sync.form = syncForm
 * @see app/Http/Controllers/Admin/FingerprintController.php:100
 * @route '/admin/fingerprint/{device}/sync-now'
 */
-export const syncNow = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const syncNow = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: syncNow.url(args, options),
     method: 'post',
 })
@@ -416,7 +416,7 @@ syncNow.definition = {
 * @see app/Http/Controllers/Admin/FingerprintController.php:100
 * @route '/admin/fingerprint/{device}/sync-now'
 */
-syncNow.url = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+syncNow.url = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { device: args }
     }
@@ -449,7 +449,7 @@ syncNow.url = (args: { device: number | { id: number } } | [device: number | { i
 * @see app/Http/Controllers/Admin/FingerprintController.php:100
 * @route '/admin/fingerprint/{device}/sync-now'
 */
-syncNow.post = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+syncNow.post = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: syncNow.url(args, options),
     method: 'post',
 })
@@ -459,7 +459,7 @@ syncNow.post = (args: { device: number | { id: number } } | [device: number | { 
 * @see app/Http/Controllers/Admin/FingerprintController.php:100
 * @route '/admin/fingerprint/{device}/sync-now'
 */
-const syncNowForm = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const syncNowForm = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: syncNow.url(args, options),
     method: 'post',
 })
@@ -469,7 +469,7 @@ const syncNowForm = (args: { device: number | { id: number } } | [device: number
 * @see app/Http/Controllers/Admin/FingerprintController.php:100
 * @route '/admin/fingerprint/{device}/sync-now'
 */
-syncNowForm.post = (args: { device: number | { id: number } } | [device: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+syncNowForm.post = (args: { device: string | number | { id: string | number } } | [device: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: syncNow.url(args, options),
     method: 'post',
 })

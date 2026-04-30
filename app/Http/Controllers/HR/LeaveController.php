@@ -24,14 +24,23 @@ class LeaveController extends Controller
 
     public function approve(LeaveRequest $leave): RedirectResponse
     {
-        $this->leaveService->approve($leave, auth()->id());
-        return back()->with('success', 'Leave approved.');
+        $error = $this->leaveService->approve($leave, auth()->id());
+
+        if ($error) {
+            Inertia::flash('toast', ['type' => 'error', 'message' => $error]);
+            return back();
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Leave approved.']);
+        return back();
     }
 
     public function reject(Request $request, LeaveRequest $leave): RedirectResponse
     {
         $request->validate(['rejection_reason' => 'required|string']);
         $this->leaveService->reject($leave, auth()->id(), $request->rejection_reason);
-        return back()->with('success', 'Leave rejected.');
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Leave rejected.']);
+        return back();
     }
 }

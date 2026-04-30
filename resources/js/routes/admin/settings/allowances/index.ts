@@ -60,7 +60,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-export const destroy = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -75,7 +75,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroy.url = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { component: args }
     }
@@ -108,7 +108,7 @@ destroy.url = (args: { component: number | { id: number } } | [component: number
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroy.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -118,7 +118,7 @@ destroy.delete = (args: { component: number | { id: number } } | [component: num
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-const destroyForm = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -133,7 +133,7 @@ const destroyForm = (args: { component: number | { id: number } } | [component: 
 * @see app/Http/Controllers/Admin/SettingController.php:104
 * @route '/admin/settings/allowances/{component}'
 */
-destroyForm.delete = (args: { component: number | { id: number } } | [component: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { component: string | number | { id: string | number } } | [component: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

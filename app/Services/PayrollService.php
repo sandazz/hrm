@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Attendance;
 use App\Models\Employee;
 use App\Models\Payroll;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -28,6 +29,26 @@ class PayrollService
         $baseSalary  = $overrides['base_salary'] ?? $employee->base_salary;
         $allowances  = $overrides['allowances'] ?? 0;
         $deductions  = $overrides['deductions'] ?? 0;
+
+        // Auto-calculate leave days and present days from attendance records
+        $leaveDays = isset($overrides['leave_days'])
+            ? $overrides['leave_days']
+            : Attendance::where('employee_id', $employeeId)
+                ->whereYear('date', $year)
+                ->whereMonth('date', $month)
+                ->where('status', 'on_leave')
+                ->count();
+
+        $presentDays = isset($overrides['present_days'])
+            ? $overrides['present_days']
+            : Attendance::where('employee_id', $employeeId)
+                ->whereYear('date', $year)
+                ->whereMonth('date', $month)
+                ->whereIn('status', ['present', 'late', 'half_day'])
+                ->count();
+
+        $workingDays = $overrides['working_days'] ?? 26;
+
         $tax         = round(($baseSalary + $allowances) * 0.1, 2); // 10% tax flat
         $netSalary   = $baseSalary + $allowances - $deductions - $tax;
 
@@ -39,9 +60,9 @@ class PayrollService
                 'deductions'    => $deductions,
                 'tax'           => $tax,
                 'net_salary'    => $netSalary,
-                'working_days'  => $overrides['working_days'] ?? 26,
-                'present_days'  => $overrides['present_days'] ?? 26,
-                'leave_days'    => $overrides['leave_days'] ?? 0,
+                'working_days'  => $workingDays,
+                'present_days'  => $presentDays,
+                'leave_days'    => $leaveDays,
                 'status'        => 'processed',
                 'processed_by'  => Auth::id(),
                 'notes'         => $overrides['notes'] ?? null,

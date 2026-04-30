@@ -138,10 +138,10 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Employee\LeaveController::cancel
-* @see app/Http/Controllers/Employee/LeaveController.php:91
+* @see app/Http/Controllers/Employee/LeaveController.php:104
 * @route '/employee/leave/{leave}/cancel'
 */
-export const cancel = (args: { leave: number | { id: number } } | [leave: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const cancel = (args: { leave: string | number | { id: string | number } } | [leave: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: cancel.url(args, options),
     method: 'delete',
 })
@@ -153,10 +153,10 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\Employee\LeaveController::cancel
-* @see app/Http/Controllers/Employee/LeaveController.php:91
+* @see app/Http/Controllers/Employee/LeaveController.php:104
 * @route '/employee/leave/{leave}/cancel'
 */
-cancel.url = (args: { leave: number | { id: number } } | [leave: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+cancel.url = (args: { leave: string | number | { id: string | number } } | [leave: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { leave: args }
     }
@@ -186,20 +186,20 @@ cancel.url = (args: { leave: number | { id: number } } | [leave: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Employee\LeaveController::cancel
-* @see app/Http/Controllers/Employee/LeaveController.php:91
+* @see app/Http/Controllers/Employee/LeaveController.php:104
 * @route '/employee/leave/{leave}/cancel'
 */
-cancel.delete = (args: { leave: number | { id: number } } | [leave: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+cancel.delete = (args: { leave: string | number | { id: string | number } } | [leave: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: cancel.url(args, options),
     method: 'delete',
 })
 
 /**
 * @see \App\Http\Controllers\Employee\LeaveController::cancel
-* @see app/Http/Controllers/Employee/LeaveController.php:91
+* @see app/Http/Controllers/Employee/LeaveController.php:104
 * @route '/employee/leave/{leave}/cancel'
 */
-const cancelForm = (args: { leave: number | { id: number } } | [leave: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const cancelForm = (args: { leave: string | number | { id: string | number } } | [leave: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: cancel.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -211,10 +211,10 @@ const cancelForm = (args: { leave: number | { id: number } } | [leave: number | 
 
 /**
 * @see \App\Http\Controllers\Employee\LeaveController::cancel
-* @see app/Http/Controllers/Employee/LeaveController.php:91
+* @see app/Http/Controllers/Employee/LeaveController.php:104
 * @route '/employee/leave/{leave}/cancel'
 */
-cancelForm.delete = (args: { leave: number | { id: number } } | [leave: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+cancelForm.delete = (args: { leave: string | number | { id: string | number } } | [leave: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: cancel.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

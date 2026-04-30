@@ -83,6 +83,19 @@ class LeaveController extends Controller
             ]);
         }
 
+        // Check leave balance
+        $startDate = \Carbon\Carbon::parse($data['start_date']);
+        $endDate   = \Carbon\Carbon::parse($data['end_date']);
+        $totalDays = $startDate->diffInWeekdays($endDate) + 1;
+
+        $remaining = $this->leaveService->getRemainingDays($employee->id, $data['leave_type_id'], $startDate->year);
+
+        if ($remaining < $totalDays) {
+            throw ValidationException::withMessages([
+                'leave_type_id' => "Insufficient leave balance. You requested {$totalDays} day(s) but only {$remaining} day(s) remaining for this leave type.",
+            ]);
+        }
+
         $this->leaveService->submitRequest($employee->id, $data);
 
         return back()->with('success', 'Leave request submitted.');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -37,15 +38,68 @@ class LeaveService
         ]);
     }
 
-    public function approve(LeaveRequest $leave, int $approverId): LeaveRequest
+    /**
+     * Returns null on success, or an error message string if the approval cannot proceed.
+     */
+    public function approve(LeaveRequest $leave, int $approverId): ?string
     {
+        $leave->load('leaveType', 'employee.user');
+
+        // 1. Check remaining leave balance
+        $remaining = $this->getRemainingDays($leave->employee_id, $leave->leave_type_id, $leave->start_date->year);
+
+        if ($remaining < $leave->total_days) {
+            return "Cannot approve: insufficient leave balance. Requested {$leave->total_days} day(s) but only {$remaining} day(s) remaining for {$leave->leaveType->name}.";
+        }
+
+        // 2. Check for existing attendance records in the date range
+        $conflict = Attendance::where('employee_id', $leave->employee_id)
+            ->whereBetween('date', [$leave->start_date->toDateString(), $leave->end_date->toDateString()])
+            ->orderBy('date')
+            ->first();
+
+        if ($conflict) {
+            $date   = $conflict->date->format('d M Y');
+            $status = ucfirst(str_replace('_', ' ', $conflict->status));
+            return "Cannot approve: {$leave->employee->user->name} already has an attendance record ({$status}) on {$date}. Please resolve the conflict first.";
+        }
+
+        // 3. Approve
         $leave->update([
             'status'      => 'approved',
             'approved_by' => $approverId,
             'approved_at' => now(),
         ]);
 
-        return $leave;
+        // 4. Bulk-insert attendance records for every day in the leave range
+        $rows    = [];
+        $now     = now()->toDateTimeString();
+        $current = $leave->start_date->copy();
+
+        while ($current->lte($leave->end_date)) {
+            $rows[] = [
+                'employee_id' => $leave->employee_id,
+                'date'        => $current->toDateString(),
+                'status'      => 'on_leave',
+                'check_in'    => null,
+                'check_out'   => null,
+                'work_hours'  => 0,
+                'notes'       => 'Auto-generated: Approved leave (' . $leave->leaveType->name . ')',
+                'source'      => 'manual',
+                'is_late'     => false,
+                'late_minutes'=> 0,
+                'overtime_hours' => 0,
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ];
+            $current->addDay();
+        }
+
+        Attendance::upsert($rows, ['employee_id', 'date'], [
+            'status', 'check_in', 'check_out', 'work_hours', 'notes', 'source', 'updated_at',
+        ]);
+
+        return null;
     }
 
     public function reject(LeaveRequest $leave, int $approverId, string $reason): LeaveRequest
