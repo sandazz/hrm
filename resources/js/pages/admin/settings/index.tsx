@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import * as settingsRoutes from '@/routes/admin/settings';
+import * as allowanceSettingsRoutes from '@/routes/admin/settings/allowances';
 import * as shiftRoutes from '@/routes/admin/settings/shifts';
 import * as leaveTypeRoutes from '@/routes/admin/settings/leave-types';
 
@@ -48,12 +49,9 @@ interface PayeBracket {
 }
 
 interface AllowanceComponent {
-    id: number; employee_id: number; component_type: string; name: string;
+    id: number; component_type: string; name: string;
     amount: number; is_percentage: boolean; percentage: number | null; is_active: boolean;
-    employee?: { user?: { name: string } };
 }
-
-interface EmployeeOption { id: number; name: string; }
 
 interface Props {
     company: CompanySettings;
@@ -63,14 +61,13 @@ interface Props {
     leaveTypes: LeaveType[];
     payeBrackets: PayeBracket[];
     allowances: AllowanceComponent[];
-    employees: EmployeeOption[];
 }
 
 type Tab = 'company' | 'payroll' | 'shifts' | 'leave-types' | 'fingerprint' | 'paye-tax' | 'allowances';
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function SettingsIndex({ company, payroll, fingerprint, shifts, leaveTypes, payeBrackets, allowances, employees }: Props) {
+export default function SettingsIndex({ company, payroll, fingerprint, shifts, leaveTypes, payeBrackets, allowances }: Props) {
     const [tab, setTab] = useState<Tab>('company');
     const [shiftDialog, setShiftDialog] = useState<{ open: boolean; shift?: Shift }>({ open: false });
     const [ltDialog, setLtDialog] = useState<{ open: boolean; lt?: LeaveType }>({ open: false });
@@ -109,7 +106,7 @@ export default function SettingsIndex({ company, payroll, fingerprint, shifts, l
                     {tab === 'company' && <CompanyPanel initial={company} />}
                     {tab === 'payroll' && <PayrollPanel initial={payroll} />}
                     {tab === 'paye-tax' && <PayeTaxPanel brackets={payeBrackets} />}
-                    {tab === 'allowances' && <AllowancesPanel allowances={allowances} employees={employees} />}
+                    {tab === 'allowances' && <AllowancesPanel allowances={allowances} />}
                     {tab === 'shifts' && <ShiftsPanel shifts={shifts} onAdd={() => setShiftDialog({ open: true })} onEdit={(s) => setShiftDialog({ open: true, shift: s })} />}
                     {tab === 'leave-types' && <LeaveTypesPanel leaveTypes={leaveTypes} onAdd={() => setLtDialog({ open: true })} onEdit={(lt) => setLtDialog({ open: true, lt })} />}
                     {tab === 'fingerprint' && <FingerprintPanel initial={fingerprint} />}
@@ -609,9 +606,8 @@ function formatType(t: string) {
     return ALLOWANCE_TYPES.find(a => a.value === t)?.label ?? t.replace(/_/g, ' ');
 }
 
-function AllowancesPanel({ allowances, employees }: { allowances: AllowanceComponent[]; employees: EmployeeOption[] }) {
+function AllowancesPanel({ allowances }: { allowances: AllowanceComponent[] }) {
     const form = useForm({
-        employee_id: '',
         component_type: 'transport_allowance',
         name: '',
         amount: '',
@@ -621,20 +617,20 @@ function AllowancesPanel({ allowances, employees }: { allowances: AllowanceCompo
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        form.post(settingsRoutes.storeAllowance().url, { preserveScroll: true, onSuccess: () => form.reset() });
+        form.post(allowanceSettingsRoutes.store().url, { preserveScroll: true, onSuccess: () => form.reset() });
     };
 
     return (
         <div className="space-y-6">
-            {/* Existing allowances */}
+            {/* Existing allowance types */}
             <Card>
                 <CardHeader>
-                    <CardTitle>Active Allowances</CardTitle>
-                    <CardDescription>All employee allowances currently used in payroll calculations</CardDescription>
+                    <CardTitle>Allowance Types</CardTitle>
+                    <CardDescription>Global allowance types available to assign to employees. These are used in payroll calculations.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     {allowances.length === 0 ? (
-                        <p className="text-muted-foreground py-6 text-center text-sm">No allowances configured yet</p>
+                        <p className="text-muted-foreground py-6 text-center text-sm">No allowance types configured yet</p>
                     ) : (
                         <div className="space-y-2">
                             {allowances.map((a) => (
@@ -642,7 +638,6 @@ function AllowancesPanel({ allowances, employees }: { allowances: AllowanceCompo
                                     <div className="flex items-center gap-4">
                                         <div>
                                             <p className="font-medium">{a.name}</p>
-                                            <p className="text-muted-foreground text-xs">{a.employee?.user?.name ?? 'Employee #' + a.employee_id}</p>
                                         </div>
                                         <Badge variant="outline">{formatType(a.component_type)}</Badge>
                                     </div>
@@ -656,7 +651,7 @@ function AllowancesPanel({ allowances, employees }: { allowances: AllowanceCompo
                                             size="sm"
                                             variant="ghost"
                                             className="text-destructive"
-                                            onClick={() => router.delete(settingsRoutes.destroyAllowance(a.id).url, {
+                                            onClick={() => router.delete(allowanceSettingsRoutes.destroy(a.id).url, {
                                                 preserveScroll: true,
                                                 onBefore: () => confirm(`Remove "${a.name}"?`),
                                             })}
@@ -671,27 +666,15 @@ function AllowancesPanel({ allowances, employees }: { allowances: AllowanceCompo
                 </CardContent>
             </Card>
 
-            {/* Add allowance form */}
+            {/* Add allowance type form */}
             <Card>
                 <CardHeader>
-                    <CardTitle>Add Allowance</CardTitle>
-                    <CardDescription>Assign a new allowance to an employee. It will be included in their next payroll calculation.</CardDescription>
+                    <CardTitle>Add Allowance Type</CardTitle>
+                    <CardDescription>Create a new allowance type. You can then assign it to employees when creating or editing their profile.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={submit} className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-1">
-                                <Label>Employee</Label>
-                                <Select value={form.data.employee_id} onValueChange={(v) => form.setData('employee_id', v)}>
-                                    <SelectTrigger><SelectValue placeholder="Select employee" /></SelectTrigger>
-                                    <SelectContent>
-                                        {employees.map((e) => (
-                                            <SelectItem key={e.id} value={String(e.id)}>{e.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {form.errors.employee_id && <p className="text-destructive text-xs">{form.errors.employee_id}</p>}
-                            </div>
                             <div className="space-y-1">
                                 <Label>Allowance Type</Label>
                                 <Select value={form.data.component_type} onValueChange={(v) => form.setData('component_type', v)}>
@@ -749,7 +732,7 @@ function AllowancesPanel({ allowances, employees }: { allowances: AllowanceCompo
                             )}
                         </div>
                         <Button type="submit" disabled={form.processing}>
-                            <Plus className="mr-2 h-4 w-4" /> Add Allowance
+                            <Plus className="mr-2 h-4 w-4" /> Add Allowance Type
                         </Button>
                     </form>
                 </CardContent>

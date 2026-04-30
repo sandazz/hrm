@@ -39,7 +39,10 @@ class DashboardService
             'pending_leaves'   => LeaveRequest::pending()->count(),
             'today_present'    => Attendance::today()->where('status', 'present')->count(),
             'today_absent'     => Attendance::today()->where('status', 'absent')->count(),
-            'on_leave_today'   => Attendance::today()->where('status', 'on_leave')->count(),
+            'on_leave_today'   => LeaveRequest::where('status', 'approved')
+                                              ->whereDate('start_date', '<=', $now->toDateString())
+                                              ->whereDate('end_date', '>=', $now->toDateString())
+                                              ->count(),
             'departments'      => Department::where('is_active', true)->count(),
         ];
     }

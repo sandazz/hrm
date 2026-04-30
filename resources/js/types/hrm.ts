@@ -167,6 +167,14 @@ export interface Setting {
     updated_at: string;
 }
 
+export interface AllowanceBreakdownItem {
+    name: string;
+    component_type: string;
+    amount: number;
+    is_percentage: boolean;
+    percentage: number | null;
+}
+
 export interface Payroll {
     id: number;
     employee_id: number;
@@ -175,6 +183,7 @@ export interface Payroll {
     base_salary: number;
     gross_salary: number;
     allowances: number;
+    allowances_breakdown?: AllowanceBreakdownItem[];
     overtime_pay: number;
     bonus: number;
     deductions: number;

@@ -26,7 +26,7 @@ class GeneratePayslipJob implements ShouldQueue
             return;
         }
 
-        $payroll = $this->payroll->load(['employee.user', 'employee.department', 'processor']);
+        $payroll = $this->payroll->load(['employee.user', 'employee.department', 'employee.allowanceTypes', 'processor']);
 
         $pdf  = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.payslip', ['payroll' => $payroll]);
         $path = "payslips/{$payroll->year}/{$payroll->month}/{$payroll->employee->employee_id}.pdf";

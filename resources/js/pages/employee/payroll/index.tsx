@@ -8,6 +8,7 @@ interface Props {
 }
 
 const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fmt = (n: number) => `LKR ${Number(n).toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 const statusColors: Record<string, string> = {
     draft: 'bg-gray-100 text-gray-700',
@@ -39,23 +40,34 @@ export default function EmployeePayroll({ payrolls: data }: Props) {
                             <CardContent className="space-y-2 text-sm">
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Base Salary</span>
-                                    <span>${Number(p.base_salary).toLocaleString()}</span>
+                                    <span>{fmt(p.base_salary)}</span>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Allowances</span>
-                                    <span className="text-emerald-600">+${Number(p.allowances).toLocaleString()}</span>
-                                </div>
+                                {p.allowances_breakdown && p.allowances_breakdown.length > 0 ? (
+                                    p.allowances_breakdown.map((a, i) => (
+                                        <div key={i} className="flex justify-between">
+                                            <span className="text-muted-foreground">
+                                                {a.name}{a.is_percentage ? ` (${a.percentage}%)` : ''}
+                                            </span>
+                                            <span className="text-emerald-600">+{fmt(a.amount)}</span>
+                                        </div>
+                                    ))
+                                ) : Number(p.allowances) > 0 ? (
+                                    <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Allowances</span>
+                                        <span className="text-emerald-600">+{fmt(p.allowances)}</span>
+                                    </div>
+                                ) : null}
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Deductions</span>
-                                    <span className="text-red-600">-${Number(p.deductions).toLocaleString()}</span>
+                                    <span className="text-red-600">-{fmt(p.deductions)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Tax</span>
-                                    <span className="text-red-600">-${Number(p.tax).toLocaleString()}</span>
+                                    <span className="text-red-600">-{fmt(p.tax)}</span>
                                 </div>
                                 <div className="flex justify-between border-t pt-2 font-bold">
                                     <span>Net Pay</span>
-                                    <span>${Number(p.net_salary).toLocaleString()}</span>
+                                    <span>{fmt(p.net_salary)}</span>
                                 </div>
                                 <div className="flex justify-between text-xs text-muted-foreground">
                                     <span>Present: {p.present_days}/{p.working_days} days</span>

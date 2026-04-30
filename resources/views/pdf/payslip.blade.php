@@ -126,7 +126,14 @@
             </thead>
             <tbody>
                 <tr><td>Basic Salary</td><td class="amount">{{ number_format($payroll->base_salary, 2) }}</td></tr>
-                @if(($payroll->allowances ?? 0) > 0)
+                @if(!empty($payroll->allowances_breakdown) && count($payroll->allowances_breakdown) > 0)
+                    @foreach($payroll->allowances_breakdown as $allowance)
+                    <tr>
+                        <td>{{ $allowance['name'] }}{{ $allowance['is_percentage'] ? ' ('.$allowance['percentage'].'%)' : '' }}</td>
+                        <td class="amount">{{ number_format($allowance['amount'], 2) }}</td>
+                    </tr>
+                    @endforeach
+                @elseif(($payroll->allowances ?? 0) > 0)
                 <tr><td>Allowances</td><td class="amount">{{ number_format($payroll->allowances, 2) }}</td></tr>
                 @endif
                 @if(($payroll->overtime_pay ?? 0) > 0)
