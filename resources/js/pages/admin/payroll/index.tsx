@@ -28,7 +28,7 @@ const fmt = (n: number | string | undefined) => `LKR ${Number(n ?? 0).toLocaleSt
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 
-function GenerateForm() {
+function GenerateForm({ onSuccess }: { onSuccess?: () => void }) {
     const { data, setData, post, processing, errors } = useForm({
         month: String(currentMonth),
         year: String(currentYear),
@@ -57,7 +57,7 @@ function GenerateForm() {
                 <Button
                     className="w-full"
                     disabled={processing}
-                    onClick={() => post(payrollRoutes.generateBulk().url)}
+                    onClick={() => post(payrollRoutes.generateBulk().url, { onSuccess })}
                 >
                     {processing ? 'Generating…' : 'Generate All'}
                 </Button>
@@ -89,7 +89,7 @@ export default function AdminPayroll({ payrolls: data }: Props) {
                             <p className="text-muted-foreground text-sm mb-3">
                                 Generates payroll for all active employees with EPF/ETF/PAYE calculations.
                             </p>
-                            <GenerateForm />
+                            <GenerateForm onSuccess={() => setBulkOpen(false)} />
                         </DialogContent>
                     </Dialog>
                 </div>
@@ -100,11 +100,11 @@ export default function AdminPayroll({ payrolls: data }: Props) {
                             <table className="w-full text-sm">
                                 <thead className="border-b bg-muted/40">
                                     <tr>
+                                        <th className="px-4 py-3 text-left font-medium">Emp ID</th>
                                         <th className="px-4 py-3 text-left font-medium">Employee</th>
                                         <th className="px-4 py-3 text-left font-medium">Period</th>
                                         <th className="px-4 py-3 text-right font-medium">Gross</th>
-                                        <th className="px-4 py-3 text-right font-medium">EPF (8%)</th>
-                                        <th className="px-4 py-3 text-right font-medium">Deductions</th>
+                                        <th className="px-4 py-3 text-right font-medium">Total Deductions</th>
                                         <th className="px-4 py-3 text-right font-medium">Net</th>
                                         <th className="px-4 py-3 text-left font-medium">Status</th>
                                         <th className="px-4 py-3 text-left font-medium">Actions</th>
@@ -113,12 +113,12 @@ export default function AdminPayroll({ payrolls: data }: Props) {
                                 <tbody>
                                     {data.data.map((p) => (
                                         <tr key={p.id} className="border-b last:border-0 hover:bg-muted/20">
+                                            <td className="px-4 py-3 text-muted-foreground font-mono text-xs">{p.employee?.employee_id}</td>
                                             <td className="px-4 py-3 font-medium">{p.employee?.user?.name}</td>
                                             <td className="px-4 py-3 text-muted-foreground">{monthNames[p.month]} {p.year}</td>
                                             <td className="px-4 py-3 text-right">{fmt(p.gross_salary ?? p.base_salary)}</td>
-                                            <td className="px-4 py-3 text-right text-red-600">{fmt(p.epf_employee)}</td>
                                             <td className="px-4 py-3 text-right text-red-600">
-                                                {fmt(Number(p.deductions ?? 0) + Number(p.tax ?? 0) + Number(p.no_pay_deduction ?? 0) + Number(p.late_deduction ?? 0))}
+                                                {fmt(Number(p.epf_employee ?? 0) + Number(p.deductions ?? 0) + Number(p.tax ?? 0) + Number(p.no_pay_deduction ?? 0) + Number(p.late_deduction ?? 0))}
                                             </td>
                                             <td className="px-4 py-3 text-right font-bold text-emerald-700">{fmt(p.net_salary)}</td>
                                             <td className="px-4 py-3">

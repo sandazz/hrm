@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AllowanceType;
 use App\Models\Attendance;
 use App\Models\Employee;
 use App\Models\Payroll;
@@ -41,7 +42,7 @@ class PayrollEngineService
 
     public function generate(int $employeeId, int $month, int $year, array $overrides = []): Payroll
     {
-        $employee = Employee::with('salaryComponents')->findOrFail($employeeId);
+        $employee = Employee::with(['salaryComponents', 'allowanceTypes'])->findOrFail($employeeId);
 
         return DB::transaction(function () use ($employee, $month, $year, $overrides) {
             $baseSalary = (float) ($overrides['base_salary'] ?? $employee->base_salary);
@@ -56,16 +57,26 @@ class PayrollEngineService
             $noPayDays    = $overrides['no_pay_days'] ?? $attendance['no_pay_days'];
             $overtimeHrs  = $overrides['overtime_hours'] ?? $attendance['overtime_hours'];
 
-            // ── Allowances from salary components ────────────────────────────
+            // ── Allowances from assigned allowance types ───────────────────
             $componentAllowances = 0;
-            $componentDeductions = 0;
+            $allowancesBreakdown = [];
+            foreach ($employee->allowanceTypes->where('is_active', true) as $allowanceType) {
+                $amount = $allowanceType->resolveAmount($baseSalary);
+                $componentAllowances += $amount;
+                $allowancesBreakdown[] = [
+                    'name'           => $allowanceType->name,
+                    'component_type' => $allowanceType->component_type,
+                    'amount'         => $amount,
+                    'is_percentage'  => $allowanceType->is_percentage,
+                    'percentage'     => $allowanceType->percentage,
+                ];
+            }
 
+            // ── Deductions from salary components ─────────────────────────────
+            $componentDeductions = 0;
             foreach ($employee->salaryComponents->where('is_active', true) as $component) {
-                $amount = $component->resolveAmount($baseSalary);
-                if ($component->isAllowance()) {
-                    $componentAllowances += $amount;
-                } else {
-                    $componentDeductions += $amount;
+                if ($component->isDeduction()) {
+                    $componentDeductions += $component->resolveAmount($baseSalary);
                 }
             }
 
@@ -107,8 +118,9 @@ class PayrollEngineService
                     'gross_salary'     => $grossSalary,
                     'overtime_pay'     => $overtimePay,
                     'bonus'            => $bonus,
-                    'allowances'       => $totalAllowances,
-                    'deductions'       => $totalDeductions,
+                    'allowances'           => $totalAllowances,
+                    'allowances_breakdown' => $allowancesBreakdown,
+                    'deductions'           => $totalDeductions,
                     'no_pay_deduction' => $noPayDeduction,
                     'late_deduction'   => $lateDeduction,
                     'epf_employee'     => $epfEmployee,
@@ -220,20 +232,19 @@ class PayrollEngineService
      */
     private function calcPayeTax(float $monthlyIncome): float
     {
-        if ($monthlyIncome <= 100000) {
-            return 0;
+        $raw = \App\Models\Setting::get('paye_tax_brackets', null);
+        $brackets = $raw ? json_decode($raw, true) : null;
+
+        if (!is_array($brackets) || empty($brackets)) {
+            $brackets = \App\Services\SettingService::defaultPayeBrackets();
         }
 
-        $brackets = [
-            [100000,  141667, 0.06],
-            [141667,  183333, 0.12],
-            [183333,  225000, 0.18],
-            [225000,  266667, 0.24],
-            [266667,  PHP_FLOAT_MAX, 0.30],
-        ];
-
         $tax = 0;
-        foreach ($brackets as [$lower, $upper, $rate]) {
+        foreach ($brackets as $bracket) {
+            $lower = (float) $bracket['from'];
+            $upper = isset($bracket['to']) && $bracket['to'] !== null ? (float) $bracket['to'] : PHP_FLOAT_MAX;
+            $rate  = (float) $bracket['rate'] / 100;
+
             if ($monthlyIncome > $lower) {
                 $taxable = min($monthlyIncome, $upper) - $lower;
                 $tax    += $taxable * $rate;

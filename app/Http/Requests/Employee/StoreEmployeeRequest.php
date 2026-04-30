@@ -12,11 +12,11 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'name'             => 'required|string|max:255',
-            'email'            => 'required|email|unique:users,email',
+            'email'            => ['required', 'string', 'max:255', 'regex:/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/', 'unique:users,email'],
             'password'         => 'nullable|string|min:8',
             'department_id'    => 'nullable|exists:departments,id',
             'job_title'        => 'required|string|max:100',
-            'phone'            => 'nullable|string|max:20',
+            'phone'            => ['nullable', 'string', 'regex:/^[0-9]{10}$/'],
             'address'          => 'nullable|string',
             'date_of_birth'    => 'nullable|date|before:today',
             'gender'           => 'nullable|in:male,female,other',
@@ -25,6 +25,8 @@ class StoreEmployeeRequest extends FormRequest
             'base_salary'      => 'nullable|numeric|min:0',
             'emergency_contact_name'  => 'nullable|string|max:100',
             'emergency_contact_phone' => 'nullable|string|max:20',
+            'allowance_type_ids'      => 'nullable|array',
+            'allowance_type_ids.*'    => 'exists:allowance_types,id',
         ];
     }
 }

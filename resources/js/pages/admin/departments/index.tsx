@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -11,12 +12,18 @@ import InputError from '@/components/input-error';
 import * as deptRoutes from '@/routes/admin/departments';
 import type { Department, PaginatedData } from '@/types';
 
+interface Manager {
+    id: number;
+    name: string;
+}
+
 interface Props {
     departments: PaginatedData<Department>;
     filters: { search?: string };
+    managers: Manager[];
 }
 
-function DeptFormFields({ data, setData, errors }: any) {
+function DeptFormFields({ data, setData, errors, managers }: any) {
     return (
         <div className="space-y-4">
             <div className="space-y-1">
@@ -32,15 +39,47 @@ function DeptFormFields({ data, setData, errors }: any) {
             <div className="space-y-1">
                 <Label htmlFor="description">Description</Label>
                 <Input id="description" value={data.description} onChange={(e: any) => setData('description', e.target.value)} />
+                <InputError message={errors.description} />
+            </div>
+            <div className="space-y-1">
+                <Label htmlFor="manager_id">Manager</Label>
+                <Select
+                    value={data.manager_id}
+                    onValueChange={(value) => setData('manager_id', value === 'none' ? '' : value)}
+                >
+                    <SelectTrigger id="manager_id">
+                        <SelectValue placeholder="Select manager" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="none">None</SelectItem>
+                        {managers.map((manager: Manager) => (
+                            <SelectItem key={manager.id} value={String(manager.id)}>{manager.name}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <InputError message={errors.manager_id} />
+            </div>
+            <div className="space-y-1">
+                <Label htmlFor="is_active">Status</Label>
+                <Select value={data.is_active} onValueChange={(value) => setData('is_active', value)}>
+                    <SelectTrigger id="is_active">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="1">Active</SelectItem>
+                        <SelectItem value="0">Inactive</SelectItem>
+                    </SelectContent>
+                </Select>
+                <InputError message={errors.is_active} />
             </div>
         </div>
     );
 }
 
-function CreateDeptDialog() {
+function CreateDeptDialog({ managers }: { managers: Manager[] }) {
     const [open, setOpen] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '', code: '', description: '',
+        name: '', code: '', description: '', manager_id: '', is_active: '1',
     });
 
     const submit = (e: React.FormEvent) => {
@@ -56,7 +95,7 @@ function CreateDeptDialog() {
             <DialogContent>
                 <DialogHeader><DialogTitle>New Department</DialogTitle></DialogHeader>
                 <form onSubmit={submit} className="space-y-4">
-                    <DeptFormFields data={data} setData={setData} errors={errors} />
+                    <DeptFormFields data={data} setData={setData} errors={errors} managers={managers} />
                     <div className="flex justify-end gap-2">
                         <Button variant="outline" type="button" onClick={() => setOpen(false)}>Cancel</Button>
                         <Button type="submit" disabled={processing}>Create</Button>
@@ -67,7 +106,7 @@ function CreateDeptDialog() {
     );
 }
 
-export default function DepartmentsIndex({ departments: data, filters }: Props) {
+export default function DepartmentsIndex({ departments: data, filters, managers }: Props) {
     const [search, setSearch] = useState(filters.search ?? '');
 
     const handleSearch = (e: React.FormEvent) => {
@@ -84,7 +123,7 @@ export default function DepartmentsIndex({ departments: data, filters }: Props) 
                         <h1 className="text-2xl font-bold">Departments</h1>
                         <p className="text-muted-foreground text-sm">{data.total} total departments</p>
                     </div>
-                    <CreateDeptDialog />
+                    <CreateDeptDialog managers={managers} />
                 </div>
 
                 <form onSubmit={handleSearch} className="flex gap-2">

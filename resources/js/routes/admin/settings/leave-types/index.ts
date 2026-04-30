@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:126
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:126
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:126
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:126
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::store
-* @see app/Http/Controllers/Admin/SettingController.php:126
+* @see app/Http/Controllers/Admin/SettingController.php:170
 * @route '/admin/settings/leave-types'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:141
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 export const update = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -72,7 +72,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:141
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 update.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ update.url = (args: { leaveType: number | { id: number } } | [leaveType: number 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:141
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 update.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -115,7 +115,7 @@ update.put = (args: { leaveType: number | { id: number } } | [leaveType: number 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:141
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 const updateForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,7 +130,7 @@ const updateForm = (args: { leaveType: number | { id: number } } | [leaveType: n
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::update
-* @see app/Http/Controllers/Admin/SettingController.php:141
+* @see app/Http/Controllers/Admin/SettingController.php:185
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 updateForm.put = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -147,7 +147,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:156
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 export const destroy = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -162,7 +162,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:156
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroy.url = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ destroy.url = (args: { leaveType: number | { id: number } } | [leaveType: number
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:156
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroy.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -205,7 +205,7 @@ destroy.delete = (args: { leaveType: number | { id: number } } | [leaveType: num
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:156
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 const destroyForm = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -220,7 +220,7 @@ const destroyForm = (args: { leaveType: number | { id: number } } | [leaveType: 
 
 /**
 * @see \App\Http\Controllers\Admin\SettingController::destroy
-* @see app/Http/Controllers/Admin/SettingController.php:156
+* @see app/Http/Controllers/Admin/SettingController.php:200
 * @route '/admin/settings/leave-types/{leaveType}'
 */
 destroyForm.delete = (args: { leaveType: number | { id: number } } | [leaveType: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

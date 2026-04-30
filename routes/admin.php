@@ -71,6 +71,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings/company', [SettingController::class, 'updateCompany'])->name('settings.company');
     Route::post('settings/payroll', [SettingController::class, 'updatePayroll'])->name('settings.payroll');
+    Route::post('settings/paye', [SettingController::class, 'updatePayeTax'])->name('settings.paye');
+    Route::post('settings/allowances', [SettingController::class, 'storeAllowance'])->name('settings.allowances.store');
+    Route::delete('settings/allowances/{component}', [SettingController::class, 'destroyAllowance'])->name('settings.allowances.destroy');
     Route::post('settings/fingerprint', [SettingController::class, 'updateFingerprint'])->name('settings.fingerprint');
 
     // Shifts (managed within Settings)

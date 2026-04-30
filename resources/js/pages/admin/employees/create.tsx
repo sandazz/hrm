@@ -4,15 +4,26 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import InputError from '@/components/input-error';
 import * as employeeRoutes from '@/routes/admin/employees';
 import type { Department } from '@/types';
 
-interface Props {
-    departments: Department[];
+interface AllowanceType {
+    id: number;
+    name: string;
+    component_type: string;
+    amount: number;
+    is_percentage: boolean;
+    percentage: number | null;
 }
 
-export default function CreateEmployee({ departments }: Props) {
+interface Props {
+    departments: Department[];
+    allowanceTypes: AllowanceType[];
+}
+
+export default function CreateEmployee({ departments, allowanceTypes }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         email: '',
@@ -20,12 +31,21 @@ export default function CreateEmployee({ departments }: Props) {
         department_id: '',
         job_title: '',
         phone: '',
+        address: '',
         hire_date: '',
         employment_type: 'full_time',
         base_salary: '',
         gender: '',
         date_of_birth: '',
+        allowance_type_ids: [] as number[],
     });
+
+    const toggleAllowance = (id: number) => {
+        setData('allowance_type_ids', data.allowance_type_ids.includes(id)
+            ? data.allowance_type_ids.filter((x) => x !== id)
+            : [...data.allowance_type_ids, id]
+        );
+    };
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -58,7 +78,15 @@ export default function CreateEmployee({ departments }: Props) {
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="email">Email *</Label>
-                                <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} required />
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                                    title="Enter a valid email address (e.g. user@example.com)"
+                                    required
+                                />
                                 <InputError message={errors.email} />
                             </div>
                             <div className="space-y-1">
@@ -121,7 +149,21 @@ export default function CreateEmployee({ departments }: Props) {
                         <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                             <div className="space-y-1">
                                 <Label htmlFor="phone">Phone</Label>
-                                <Input id="phone" value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
+                                <Input
+                                    id="phone"
+                                    type="tel"
+                                    value={data.phone}
+                                    onChange={(e) => setData('phone', e.target.value)}
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
+                                    title="Enter a valid 10-digit phone number"
+                                />
+                                <InputError message={errors.phone} />
+                            </div>
+                            <div className="space-y-1">
+                                <Label htmlFor="address">Address</Label>
+                                <Input id="address" value={data.address} onChange={(e) => setData('address', e.target.value)} />
+                                <InputError message={errors.address} />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="date_of_birth">Date of Birth</Label>
@@ -140,6 +182,32 @@ export default function CreateEmployee({ departments }: Props) {
                             </div>
                         </CardContent>
                     </Card>
+
+                    {/* Allowances */}
+                    {allowanceTypes.length > 0 && (
+                        <Card className="lg:col-span-2">
+                            <CardHeader><CardTitle>Allowances</CardTitle></CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground mb-3 text-sm">Select the allowances this employee will receive in payroll calculations.</p>
+                                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                                    {allowanceTypes.map((at) => (
+                                        <label key={at.id} className="flex cursor-pointer items-center gap-2 rounded-lg border p-3 hover:bg-muted">
+                                            <Checkbox
+                                                checked={data.allowance_type_ids.includes(at.id)}
+                                                onCheckedChange={() => toggleAllowance(at.id)}
+                                            />
+                                            <div>
+                                                <p className="text-sm font-medium">{at.name}</p>
+                                                <p className="text-muted-foreground text-xs">
+                                                    {at.is_percentage ? `${at.percentage}% of basic` : `LKR ${Number(at.amount).toLocaleString()}`}
+                                                </p>
+                                            </div>
+                                        </label>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
 
                     <div className="lg:col-span-2 flex justify-end gap-3">
                         <Button variant="outline" type="button" asChild>

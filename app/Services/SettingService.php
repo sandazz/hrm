@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\AllowanceType;
+use App\Models\Employee;
 use App\Models\LeaveType;
+use App\Models\SalaryComponent;
 use App\Models\Setting;
 use App\Models\Shift;
 use Illuminate\Support\Facades\DB;
@@ -61,6 +64,44 @@ class SettingService
         foreach ($data as $key => $value) {
             Setting::set($key, $value, 'payroll', $types[$key] ?? 'string');
         }
+    }
+
+    // ── PAYE Tax settings ─────────────────────────────────────────────────────
+
+    public static function defaultPayeBrackets(): array
+    {
+        return [
+            ['from' => 0,      'to' => 100000, 'rate' => 0],
+            ['from' => 100000, 'to' => 141667, 'rate' => 6],
+            ['from' => 141667, 'to' => 183333, 'rate' => 12],
+            ['from' => 183333, 'to' => 225000, 'rate' => 18],
+            ['from' => 225000, 'to' => 266667, 'rate' => 24],
+            ['from' => 266667, 'to' => null,   'rate' => 30],
+        ];
+    }
+
+    public function getPayeBrackets(): array
+    {
+        $raw = Setting::get('paye_tax_brackets', null);
+        if ($raw) {
+            $decoded = json_decode($raw, true);
+            if (is_array($decoded)) return $decoded;
+        }
+        return self::defaultPayeBrackets();
+    }
+
+    public function savePayeBrackets(array $brackets): void
+    {
+        Setting::set('paye_tax_brackets', json_encode($brackets), 'payroll', 'string');
+    }
+
+    // ── Global allowance components ───────────────────────────────────────────
+
+    public function getAllowanceComponents(): \Illuminate\Support\Collection
+    {
+        return AllowanceType::orderBy('component_type')
+            ->orderBy('name')
+            ->get();
     }
 
     // ── Shift settings ────────────────────────────────────────────────────────
